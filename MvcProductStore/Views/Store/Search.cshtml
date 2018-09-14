@@ -1,0 +1,26 @@
+﻿@model IEnumerable<MvcProductStore.Models.Product>
+
+@{
+    ViewBag.Title = "Search";
+}
+
+<h2>Search</h2>
+
+
+<div>
+
+    <ul>
+        @foreach (var item in Model)
+        {
+            <li>
+                <a href="@Url.Action("Details",
+                    new { id = item.ProductId })">
+                    <img alt="@item.Name" src="@item.ImageUrl" style="max-height:50px;" />
+                    <span>@item.Name</span>
+                </a>
+            </li>
+        }
+    </ul>
+</div>
+
+

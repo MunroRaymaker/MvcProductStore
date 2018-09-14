@@ -1,0 +1,27 @@
+﻿@model IEnumerable<MvcProductStore.Models.Category>
+
+@{
+    ViewBag.Title = "Store";
+}
+
+<h2> Browse Categories</h2>
+
+<p>
+    Select from @Model.Count() categories:
+</p>
+<table class="table table-responsive table-striped">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.ActionLink(item.Name, "Browse", new { categoryId = item.CategoryId })
+        </td>
+    </tr>
+}
+
+</table>

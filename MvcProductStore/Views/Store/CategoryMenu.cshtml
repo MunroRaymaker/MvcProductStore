@@ -1,0 +1,18 @@
+﻿@model IEnumerable<MvcProductStore.Models.Category>
+
+@section scripts{
+  
+
+}
+
+<div class="list-group">
+
+    @foreach (var cat in Model)
+    {
+        @Html.ActionLink(cat.Name, "Browse", "Store", new { categoryId = cat.CategoryId }, new { @class = "list-group-item" })
+
+        @*<a href="#" class="list-group-item active">Category 1</a>*@
+    }
+
+</div>
+

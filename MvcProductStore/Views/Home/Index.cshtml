@@ -1,0 +1,40 @@
+﻿@model List<MvcProductStore.Models.Product>
+
+@{
+    ViewBag.Title = "Product Store";
+}
+
+    <div class="card mt-4">
+        <img class="card-img-top img-fluid" src="~/Content/Images/1400x520_THE_SCENT_DK.jpg" width="900px" alt="">
+        <div class="card-body">
+            <h3 class="card-title">Product Name</h3>
+            <h4>$24.99</h4>
+            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente dicta fugit fugiat hic aliquam itaque facere, soluta. Totam id dolores, sint aperiam sequi pariatur praesentium animi perspiciatis molestias iure, ducimus!</p>
+            <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
+            4.0 stars
+
+
+        </div>
+    </div>
+<!-- /.card -->
+
+<div class="card card-outline-secondary my-4">
+    <div class="card-header">
+        Most popular products
+    </div>
+    <div class="card-body">
+
+
+        @foreach (var item in Model)
+        {
+            <a href="@Url.Action("Details", "Store", new { id = item.ProductId })">
+                <img alt="@item.Name" src="@item.ImageUrl" style="max-height:50px;" />
+                <span>@item.Name</span>
+            </a>
+            <hr>
+        }
+
+        <a href="#" class="btn btn-success">Leave a Review</a>
+    </div>
+</div>
+<!-- /.card -->
