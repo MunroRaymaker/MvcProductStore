@@ -1,5 +1,6 @@
 # MvcProductStore
-A simple product store with many unsafe features used for PEN testing
+A simple product store with many unsafe features used for PEN testing.
+Based on the old Microsoft tutorial for MvcMusicStore found at https://docs.microsoft.com/en-us/aspnet/mvc/overview/older-versions/mvc-music-store/.
 
 ## Git
 
