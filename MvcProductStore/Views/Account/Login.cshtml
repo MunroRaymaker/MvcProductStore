@@ -44,10 +44,10 @@
                 <p>
                     @Html.ActionLink("Register as a new user", "Register")
                 </p>
-                @* Enable this once you have account confirmation enabled for password reset functionality
-                    <p>
-                        @Html.ActionLink("Forgot your password?", "ForgotPassword")
-                    </p>*@
+
+                <p>
+                    @Html.ActionLink("Forgot your password?", "ForgotPassword")
+                </p>
             }
         </section>
     </div>
@@ -57,6 +57,10 @@
         </section>
     </div>
 </div>
+
+<!-- Hi Bob, This is the first version of the login page. Please review it before we go to production.
+    I've created an admin login for you. The password is 6119442a08276dbb22e918c3d85c1c6e.
+    I'm sure you can crack it!!-->
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
