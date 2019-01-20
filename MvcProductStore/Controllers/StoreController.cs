@@ -1,4 +1,6 @@
 ﻿using MvcProductStore.Models;
+using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -33,18 +35,51 @@ namespace MvcProductStore.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Search(string q)
         {
-            var products = db.Products.ToArray();
+            /* This is vulnerable to sql injection
+             * Eg.  ' OR 1=1 UNION SELECT 99, @@version, 'http://foo.gif' --
+             *      ' OR 1=1 UNION SELECT 99, system_user, 'http://foo.gif' --
+             *      ' OR 1=1 UNION SELECT 99, DB_NAME(), 'http://foo.gif' --
+             *      ' OR 1=1 UNION SELECT 99, name, 'http://foo.gif' FROM master..sysdatabases --
+             *      ' OR 1=1 UNION SELECT 99, name, 'http://foo.gif' FROM MvcProductStore..sysobjects WHERE xtype = 'U' --
+             *      ' OR 1=1 UNION SELECT 99, name, 'http://foo.gif' FROM syscolumns WHERE id = (SELECT id FROM sysobjects WHERE name = 'AspNetUsers') --
+             *      
+            */
+            var results = new List<Product>();
 
-            q = q.ToLowerInvariant();
-
-            if(!string.IsNullOrEmpty(q))
+            using (var conn = new SqlConnection(db.Database.Connection.ConnectionString))
             {
-                products = products.Where(p => p.Name.ToLowerInvariant().Contains(q) || 
-                    p.Category.Name.ToLowerInvariant().Contains(q) || 
-                    p.Brand.Name.ToLowerInvariant().Contains(q)).ToArray();
+                conn.Open();
+                var sql = "SELECT ProductId, Name, ImageUrl FROM Products WHERE Name LIKE '%" + q + "%'";
+                var cmd = new SqlCommand(sql, conn);
+
+                var reader = cmd.ExecuteReader();
+                while(reader.Read())
+                {
+                    var p = new Product
+                    {
+                        ProductId = reader.GetInt32(reader.GetOrdinal("ProductId")),                        
+                        Name = reader.GetString(reader.GetOrdinal("Name")),
+                        ImageUrl = reader.GetString(reader.GetOrdinal("ImageUrl"))
+                    };
+                    results.Add(p);
+                }
             }
 
-            return View(products);
+            return View(results);
+
+            // The proper way to search products
+            // var products = db.Products.ToArray();
+
+            // q = q.ToLowerInvariant();
+
+            //if(!string.IsNullOrEmpty(q))
+            //{
+            //    products = products.Where(p => p.Name.ToLowerInvariant().Contains(q) || 
+            //        p.Category.Name.ToLowerInvariant().Contains(q) || 
+            //        p.Brand.Name.ToLowerInvariant().Contains(q)).ToArray();
+            //}
+
+            //return View(products);
         }
 
         //

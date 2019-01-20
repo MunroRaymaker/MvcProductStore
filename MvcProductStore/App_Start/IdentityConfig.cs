@@ -18,23 +18,23 @@ namespace MvcProductStore
             // Plug in your email service here to send an email.
             try
             {
-                SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
+                //SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
 
-                smtpClient.Credentials = new System.Net.NetworkCredential("youremail@gmail.com", "aPassword");
-                smtpClient.UseDefaultCredentials = true;
-                smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
-                smtpClient.EnableSsl = true;
-                MailMessage mail = new MailMessage
-                {
-                    From = new MailAddress("noreply@taxfreeshop.com", "Taxfree Shop"),
-                    Subject = message.Subject,
-                    Body = message.Body,
-                    IsBodyHtml = true
-                };
+                //smtpClient.Credentials = new System.Net.NetworkCredential("youremail@gmail.com", "aPassword");
+                //smtpClient.UseDefaultCredentials = true;
+                //smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
+                //smtpClient.EnableSsl = true;
+                //MailMessage mail = new MailMessage
+                //{
+                //    From = new MailAddress("noreply@taxfreeshop.com", "Taxfree Shop"),
+                //    Subject = message.Subject,
+                //    Body = message.Body,
+                //    IsBodyHtml = true
+                //};
 
-                mail.To.Add(new MailAddress(message.Destination));
+                //mail.To.Add(new MailAddress(message.Destination));
 
-                smtpClient.Send(mail);
+                //smtpClient.Send(mail);
 
             }
             catch (Exception ex)

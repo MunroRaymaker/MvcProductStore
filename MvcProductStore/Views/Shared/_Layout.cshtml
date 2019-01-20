@@ -18,12 +18,12 @@
 <body>
 
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-secondary fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-secondary py-3">
         <div class="container">
 
             <a class="navbar-brand" href="@Url.Action("Index", "Home")">
                 @*<img src="https://getbootstrap.com/docs/4.1/assets/brand/bootstrap-solid.svg" width="30" height="30" alt="">*@
-                <img src="~/Content/Images/duty-free-blue.png" alt="duty free" width="48" height="48" />
+                <img src="~/Content/Images/duty-free-blue.png" alt="duty free" width="48" height="48" /> TAXFREE.COM
             </a>
 
             @*Html.ActionLink("Product Store", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
@@ -63,16 +63,25 @@
         </div>
     </nav>
 
+    <div class="row" style="background: #000; color: yellow">
+        <div class="col-12">
+            Best online taxfree shop. Sale on right now. Save up to 70% on selected items in our store. Hurry up while the stock lasts. Buy before <span id="countdown"></span> and get free shipping!
+        </div>
+    </div>
+
+
+
+
     <!-- Page Content -->
     <div class="container">
 
         <div class="row">
 
             <div class="col-lg-3">
-                <h1 class="my-4"><a href="~/Store/Details/6" style="text-decoration: none">Tax Free Shopping</a></h1>
+                <h1 class="my-4"><a href="~/Store/Details/6" style="text-decoration: none">Tax Free Shopping made easy</a></h1>
                 <img src="~/Content/Images/sale-banner.jpg" width="250" />
                 @{ Html.RenderAction("CategoryMenu", "Store"); }
-                
+
             </div>
             <!-- /.col-lg-3 -->
 
@@ -100,7 +109,7 @@
             <a href="https://plus.google.com/+Bootsnipp-page"><i class="fab fa-google-plus fa-3x social"></i></a>
             <a href="mailto:bootsnipp@gmail.com"><i class="fab fa-instagram fa-3x social"></i></a>
         </div>
-        
+
         <!-- /.container -->
     </footer>
 
@@ -118,5 +127,36 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
+    <script>
+        // Set the date we're counting down to
+        var countDownDate = new Date("Mar 5, 2021 15:37:25").getTime();
+
+        // Update the count down every 1 second
+        var x = setInterval(function () {
+
+            // Get todays date and time
+            var now = new Date().getTime();
+
+            // Find the distance between now and the count down date
+            var distance = countDownDate - now;
+
+            // Time calculations for days, hours, minutes and seconds
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Display the result in the element with id="demo"
+            document.getElementById("countdown").innerHTML = days + "d " + hours + "h "
+                + minutes + "m " + seconds + "s ";
+
+            // If the count down is finished, write some text
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("demo").innerHTML = "EXPIRED";
+            }
+        }, 1000);
+    </script>
 </body>
 </html>

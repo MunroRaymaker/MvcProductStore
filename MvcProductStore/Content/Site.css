@@ -5,7 +5,6 @@
  */
 
 body {
-    padding-top: 64px;
     font-family: 'Poppins', sans-serif;
 }
 
@@ -32,13 +31,19 @@ body {
     font-family: Monospace !important;
 }
 
+
+
 .search-result > li {
     padding: 20px;
     border-bottom: 1px solid #dadada;
 }
 
-@media (min-width: 992px) {
-    body {
+@media (min-width: 1367px) {
+    /*body {
         padding-top: 100px;
+    }*/
+
+    .search-input{
+        width: 400px !important;
     }
 }
