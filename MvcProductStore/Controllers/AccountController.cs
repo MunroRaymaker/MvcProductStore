@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using MvcProductStore.Models;
@@ -6,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace MvcProductStore.Controllers
 {
@@ -14,7 +16,7 @@ namespace MvcProductStore.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-
+               
         public AccountController()
         {
         }
@@ -152,6 +154,14 @@ namespace MvcProductStore.Controllers
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+
+                var roleManager = new IdentityManager();
+                
+                if (!string.IsNullOrEmpty(model.Role) && !roleManager.RoleExists(model.Role))
+                {
+                    ModelState.AddModelError("", "Role does not exist");
+                    return View(model);
+                }
 
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)

@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -15,6 +16,40 @@ namespace MvcProductStore.Models
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
             // Add custom user claims here
             return userIdentity;
+        }
+    }
+
+    public class IdentityManager
+    {
+        public bool RoleExists(string name)
+        {
+            var rm = new RoleManager<IdentityRole>(
+                new RoleStore<IdentityRole>(new ApplicationDbContext()));
+            return rm.RoleExists(name);
+        }
+
+        public bool AddUserToRole(string userId, string roleName)
+        {
+            var um = new UserManager<ApplicationUser>(
+                new UserStore<ApplicationUser>(new ApplicationDbContext()));
+            var idResult = um.AddToRole(userId, roleName);
+            return idResult.Succeeded;
+        }
+
+        public void ClearUserRoles(string userId)
+        {
+            var um = new UserManager<ApplicationUser>(
+                new UserStore<ApplicationUser>(new ApplicationDbContext()));
+            var rm = new RoleManager<IdentityRole>(
+                new RoleStore<IdentityRole>(new ApplicationDbContext()));
+            var user = um.FindById(userId);
+            var currentRoles = new List<IdentityUserRole>(user.Roles);
+            var activeRoles = rm.Roles;
+            foreach (var role in currentRoles)
+            {
+                var ac = activeRoles.FirstAsync(x => x.Id == role.RoleId).Result;
+                um.RemoveFromRole(userId, ac.Name);
+            }
         }
     }
 
