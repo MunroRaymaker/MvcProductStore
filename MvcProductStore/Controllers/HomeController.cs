@@ -2,6 +2,7 @@
 using MvcProductStore.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -17,6 +18,44 @@ namespace MvcProductStore.Controllers
             var topSellers = GetTopSellingProducts(5);
 
             return View(topSellers);
+        }
+
+        [HttpGet]
+        public ActionResult Contact()
+        {            
+            return View();
+        }
+
+        /*
+         * This is unsafe as file extensions are not validated. Anything can be uploaded and because directory browsing 
+         * is enabled, scripts can be executed in the uploaded files. Eg. try upload the file shell.aspx.
+         */
+        [HttpPost]
+        public ActionResult Contact(ContactViewModel model)
+        {
+            if(ModelState.IsValid)
+            {
+                if (model.File != null && model.File.ContentLength > 0)
+                {
+                    try
+                    {
+                        string path = Path.Combine(Server.MapPath("~/Uploads"),
+                                                   Path.GetFileName(model.File.FileName));
+                        model.File.SaveAs(path);
+                    }
+                    catch (Exception ex)
+                    {
+                        ViewBag.Message = ex.Message;
+                        return View();
+                    }
+                }
+
+                // TODO Send email here                
+
+                return View("Confirmation");
+            }            
+
+            return View();
         }
 
         [HttpGet]

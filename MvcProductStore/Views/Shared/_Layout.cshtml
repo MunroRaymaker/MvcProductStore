@@ -63,12 +63,15 @@
         </div>
     </nav>
 
-    <div class="row" style="background: #000; color: yellow">
-        <div class="col-12">
-            Best online taxfree shop. Sale on right now. Save up to 70% on selected items in our store. Hurry up while the stock lasts. Buy before <span id="countdown"></span> and get free shipping!
+    <div style="margin-left:15px; margin-right: 15px;">
+        <div class="row" style="background: #000; color: yellow; margin-bottom: 15px;">
+            <div class="col-12">
+                Best online taxfree shop.Save up to 70% on selected items in our store. Hurry up while the stock lasts. Buy before <span id="countdown"></span> and get free shipping!
+            </div>
         </div>
-    </div>
 
+    </div>
+    
 
 
 
@@ -99,7 +102,7 @@
     <!-- Footer -->
     <footer class="py-5 bg-dark">
         <div class="container">
-            <p class="m-0 text-center text-white">Copyright &copy; @DateTime.Now.Year</p>
+            <p class="m-0 text-center text-white">Copyright &copy; @DateTime.Now.Year | <a href="/Home/Contact">Contact us</a>  </p>
 
         </div>
 
@@ -133,30 +136,30 @@
         var countDownDate = new Date("Mar 5, 2021 15:37:25").getTime();
 
         // Update the count down every 1 second
-        var x = setInterval(function () {
+        //var x = setInterval(function () {
 
-            // Get todays date and time
-            var now = new Date().getTime();
+        //    // Get todays date and time
+        //    var now = new Date().getTime();
 
-            // Find the distance between now and the count down date
-            var distance = countDownDate - now;
+        //    // Find the distance between now and the count down date
+        //    var distance = countDownDate - now;
 
-            // Time calculations for days, hours, minutes and seconds
-            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        //    // Time calculations for days, hours, minutes and seconds
+        //    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        //    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        //    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        //    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            // Display the result in the element with id="demo"
-            document.getElementById("countdown").innerHTML = days + "d " + hours + "h "
-                + minutes + "m " + seconds + "s ";
+        //    // Display the result in the element with id="demo"
+        //    document.getElementById("countdown").innerHTML = days + "d " + hours + "h "
+        //        + minutes + "m " + seconds + "s ";
 
-            // If the count down is finished, write some text
-            if (distance < 0) {
-                clearInterval(x);
-                document.getElementById("demo").innerHTML = "EXPIRED";
-            }
-        }, 1000);
+        //    // If the count down is finished, write some text
+        //    if (distance < 0) {
+        //        clearInterval(x);
+        //        document.getElementById("demo").innerHTML = "EXPIRED";
+        //    }
+        //}, 1000);
     </script>
 </body>
 </html>

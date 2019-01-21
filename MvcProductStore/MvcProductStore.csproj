@@ -253,6 +253,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\MessageService.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\ContactViewModel.cs" />
     <Compile Include="ViewModels\ReviewViewModel.cs" />
     <Compile Include="ViewModels\ShoppingCartRemoveViewModel.cs" />
     <Compile Include="ViewModels\ShoppingCartViewModel.cs" />
@@ -321,6 +322,7 @@
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
     <Content Include="shell.aspx" />
+    <Content Include="Uploads\test.txt" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -380,6 +382,8 @@
     <Content Include="Views\StoreManager\Orders.cshtml" />
     <Content Include="Views\StoreManager\Shell.cshtml" />
     <Content Include="Views\Home\Reviews.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Confirmation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
