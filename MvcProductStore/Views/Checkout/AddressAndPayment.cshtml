@@ -95,26 +95,96 @@
     </div>
 
 
-
-
     <h4>Payment</h4>
     <hr />
-    <p>
-        We're running a promotion: all items are free
-        with the promo code: "FREE"
-    </p>
-    <div class="editor-label">
-        @Html.Label("Promo Code")
+
+
+    <div class="dibs_brand_assets" style="margin: 0px;">
+        <img src="https://cdn.dibspayment.com/logo/checkout/combo/horiz/DIBS_checkout_kombo_horizontal_03.png" alt="DIBS - Payments made easy" width="360" />
     </div>
-    <div class="editor-field">
-        @Html.TextBox("PromoCode")
+
+    <br />
+
+    <div class="form-group">
+        <label for="username">Full name (on the card)</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fa fa-user"></i></span>
+            </div>
+            <input type="text" class="form-control" name="CardholderName" placeholder="" required="">
+        </div>
     </div>
+
+    <div class="form-group">
+        <label for="cardNumber">Card number</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fa fa-credit-card"></i></span>
+            </div>
+            <input type="text" class="form-control" name="CardNumber" placeholder="">
+        </div> <!-- input-group.// -->
+    </div> <!-- form-group.// -->
+
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="form-group">
+                <label><span class="hidden-xs">Expiration</span> </label>
+                <div class="form-inline">
+                    <select class="form-control" name="ExpDateMonth" id="ExpDateMonth" style="width:45%">
+                        <option>MM</option>
+                        <option>01</option>
+                        <option>02</option>
+                        <option>03</option>
+                        <option>04</option>
+                        <option>05</option>
+                        <option>06</option>
+                        <option>07</option>
+                        <option>08</option>
+                        <option>09</option>
+                        <option>10</option>
+                        <option>11</option>
+                        <option>12</option>
+                    </select>
+                    <span style="width:10%; text-align: center"> / </span>
+                    <select class="form-control" name="ExpDateYear" id="ExpDateYear" style="width:45%">
+                        <option>YY</option>
+                        <option>2019</option>
+                        <option>2020</option>
+                        <option>2021</option>
+                        <option>2022</option>
+                        <option>2023</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label data-toggle="tooltip" title="3 digits code on back side of the card" data-original-title="3 digits code on back side of the card">CVV <i class="fa fa-question-circle"></i></label>
+                <input class="form-control" name="CVC" id="CVC" required="" type="text">
+            </div> <!-- form-group.// -->
+        </div>
+    </div> <!-- row.// -->
+
+
+
+
+
+    @*<p>
+            We're running a promotion: all items are free
+            with the promo code: "FREE"
+        </p>
+        <div class="editor-label">
+            @Html.Label("Promo Code")
+        </div>
+        <div class="editor-field">
+            @Html.TextBox("PromoCode")
+        </div>*@
 
     <br />
 
     <div class="form-group row">
         <div class="col-sm-offset-2 col-sm-10">
-            <input type="submit" value="Submit Order" class="btn btn-default" />
+            <input type="submit" value="Submit Order" class="btn btn-primary btn-block" />
         </div>
     </div>
 </div>

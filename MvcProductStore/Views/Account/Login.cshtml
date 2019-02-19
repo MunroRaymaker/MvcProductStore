@@ -1,7 +1,7 @@
 ﻿@using MvcProductStore.Models
 @model LoginViewModel
 @{
-    ViewBag.Title = "Returning Customer Log in";
+    ViewBag.Title = "Customer Log in";
 }
 
 <h2>@ViewBag.Title.</h2>
@@ -11,7 +11,7 @@
             @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
                 @Html.AntiForgeryToken()
-                <h4>Use the account you previously created to log in again.</h4>
+                <h4>If you have previously signed in you can enter your credentials below. If not the please click register as a new user.</h4>
                 <hr />
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group">
@@ -38,7 +38,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Log in" class="btn btn-default" />
+                        <input type="submit" value="Log in" class="btn btn-primary" />
                     </div>
                 </div>
                 <p>
@@ -59,8 +59,7 @@
 </div>
 
 <!-- Hi Bob, This is the first version of the login page. Please review it before we go to production.
-    I've created an admin login for you. The password is 6119442a08276dbb22e918c3d85c1c6e.
-    I'm sure you can crack it!!-->
+    I've created an admin login for you! -->
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

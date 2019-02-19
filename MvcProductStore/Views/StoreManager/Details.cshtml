@@ -78,5 +78,6 @@
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ProductId }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "Index") | 
+    @Html.ActionLink("View backup pdf", "Download", new { fileName = (Model.ItemNumber + ".pdf") } )
 </p>

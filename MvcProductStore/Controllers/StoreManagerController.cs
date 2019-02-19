@@ -5,6 +5,8 @@ using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using System.Linq;
+using System.IO;
 
 namespace MvcProductStore.Controllers
 {
@@ -63,6 +65,14 @@ namespace MvcProductStore.Controllers
                 return HttpNotFound();
             }
             return View(product);
+        }
+
+        // GET: StoreManager/Download
+        // Vulnerable to path traversal        
+        public ActionResult Download(string fileName)
+        {
+            byte[] fileBytes = System.IO.File.ReadAllBytes(Server.MapPath("~/SKU/") + fileName);
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
         }
 
         // GET: StoreManager/Create

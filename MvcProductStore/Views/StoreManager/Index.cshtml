@@ -50,7 +50,9 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.ItemNumber)
+            <a href="@Url.Action("Details", "Store", new { id = item.ProductId })">
+                @item.ItemNumber
+            </a>
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Brand.Name)

