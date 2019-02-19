@@ -1,0 +1,57 @@
+ Volume in drive C is System
+ Volume Serial Number is 18A7-3DCC
+
+ Directory of C:\Program Files\Microsoft SQL Server\130\LocalDB\Binn
+
+30-05-2018  19:24    <DIR>          .
+30-05-2018  19:24    <DIR>          ..
+30-04-2016  08:12           180.928 BatchParser.dll
+30-05-2018  19:24    <DIR>          de
+30-05-2018  19:24    <DIR>          es
+29-04-2016  22:05         1.223.248 etwcls.mof
+09-02-2016  19:16             1.713 etwcnf.xml
+30-05-2018  19:24    <DIR>          fr
+29-10-2016  04:20         1.297.600 hkcompile.dll
+29-10-2016  04:21         5.598.408 hkengine.dll
+29-10-2016  04:21           158.920 hkruntime.dll
+30-05-2018  19:24    <DIR>          it
+30-05-2018  19:24    <DIR>          ja
+30-05-2018  19:24    <DIR>          ko
+09-02-2016  19:35             1.474 localdbxeventconfig.xml
+28-10-2016  19:03         1.310.720 mssqlsystemresource.ldf
+28-10-2016  19:03        41.943.040 mssqlsystemresource.mdf
+30-04-2016  08:12         1.496.768 msxmlsql.dll
+30-04-2016  08:12            91.848 odsole70.dll
+30-04-2016  08:12            32.960 opends60.dll
+30-05-2018  19:24    <DIR>          pt
+29-10-2016  04:20           843.968 qds.dll
+30-05-2018  19:24    <DIR>          Resources
+30-05-2018  19:24    <DIR>          ru
+29-10-2016  04:21           461.512 sqlaccess.dll
+29-10-2016  04:20           186.568 sqlboot.dll
+29-10-2016  04:20         2.585.280 sqlDK.dll
+29-10-2016  04:20        39.353.544 sqllang.dll
+29-10-2016  04:17        37.555.904 sqlmin.dll
+29-10-2016  04:20            26.312 sqlos.dll
+30-04-2016  08:12            61.120 sqlscm.dll
+29-10-2016  04:17            27.848 sqlscriptdowngrade.dll
+29-10-2016  04:20         5.797.064 sqlscriptupgrade.dll
+29-10-2016  04:21           392.896 sqlservr.exe
+09-02-2016  19:16               608 sqlservr.exe.config
+29-10-2016  04:17         8.896.704 SqlTsEs.dll
+30-04-2016  08:11           176.832 SqlUserInstance.dll
+30-05-2018  19:24    <DIR>          Templates
+29-04-2016  22:06            10.042 xeclrhostpkg.mof
+29-04-2016  22:27             8.620 xelocaldbpkg.mof
+09-02-2016  19:34             2.393 xepkg0.mof
+29-04-2016  22:29           355.021 xesospkg.mof
+29-04-2016  22:00         1.426.600 xesqlminpkg.mof
+28-10-2016  17:03           604.508 xesqlpkg.mof
+30-04-2016  08:12           319.168 xmlrw.dll
+30-04-2016  08:12           227.520 xmlrwbin.dll
+30-04-2016  08:12            65.728 xplog70.dll
+30-04-2016  08:12           422.080 XPStar.dll
+30-05-2018  19:24    <DIR>          zh-Hans
+30-05-2018  19:24    <DIR>          zh-Hant
+              36 File(s)    153.145.467 bytes
+              14 Dir(s)  291.358.318.592 bytes free

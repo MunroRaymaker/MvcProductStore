@@ -47,6 +47,9 @@
 <table class="table table-striped">
     <tr>
         <th>
+            #
+        </th>
+        <th>
             Product Name
         </th>
         <th>
@@ -61,6 +64,9 @@
     @foreach (var item in Model.CartItems)
     {
         <tr id="row-@item.RecordId">
+            <td>
+                <img src="@item.Product.ImageUrl" style="max-height: 50px; max-width: 80px;" />
+            </td>
             <td>
                 @Html.ActionLink(item.Product.Name, "Details", "Store", new { id = item.ProductId }, null)
             </td>

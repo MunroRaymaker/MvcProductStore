@@ -4,8 +4,39 @@
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-shop-item/blob/master/LICENSE)
  */
 
+
+* {
+    box-sizing: border-box;
+}
+
+    *:before,
+    *:after {
+        box-sizing: border-box;
+    }
+    
+
+html,
+body {
+    height: 100%;
+    position: relative;
+}
+
 body {
     font-family: 'Poppins', sans-serif;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.main-container {
+    min-height: 100vh;  /*will cover the 100% of viewport*/ 
+    overflow: hidden;
+    display: block;
+    position: relative;
+    padding-bottom: 276px; /*height of your footer*/ 
 }
 
 .social:hover {
@@ -25,13 +56,38 @@ body {
     color: #fefefe;
 }
 
+.btn-facebook {
+    color: #fff;
+    background-color: #3b5998;
+    border-color: rgba(0,0,0,0.2);
+}
+
+.btn-google {
+    color: #fff;
+    background-color: #a32b1c;
+    border-color: rgba(0,0,0,0.2);
+}
+
+.btn-social {
+    position: relative;
+    padding-left: 44px;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
 .console {
     background-color: rgb(1, 36, 86) !important;
     color: rgb(238, 237, 240) !important;
     font-family: Monospace !important;
 }
 
-
+.product-list > ul > li {
+    padding: 20px;
+    border-bottom: 1px solid #dadada;
+}
 
 .search-result > li {
     padding: 20px;
