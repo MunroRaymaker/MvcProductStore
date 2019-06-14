@@ -24,7 +24,8 @@
     </p>
     <p>
         <strong>Price:</strong>
-        @String.Format("{0:F} {1}", Model.Price , Model.Currency)
+        @String.Format("{0:F} {1}", Model.Price, Model.Currency)
+        <span class="strike-through">@String.Format("{0:F} {1}", Model.Price * 1.25m, Model.Currency)</span>
     </p>
     <p>
         @Html.ActionLink("+ Add to cart", "AddToCart", "ShoppingCart", new { id = Model.ProductId }, new { @class = "btn btn-success" })        

@@ -16,6 +16,7 @@
                     new { id = product.ProductId })">
                     <img alt="@product.Name" src="@product.ImageUrl" style="max-height:50px;" />
                     &nbsp;&nbsp;<span>@product.Name</span>
+                    &nbsp;&nbsp;<span>@String.Format("{0:F} {1}", product.Price, product.Currency) </span>
                 </a>
             </li>
         }

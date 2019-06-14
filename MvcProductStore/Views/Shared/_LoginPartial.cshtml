@@ -2,7 +2,7 @@
 @if (Request.IsAuthenticated)
 {
     <li class="nav-item">
-        @Html.ActionLink("Logged in as " + User.Identity.GetUserName().Substring(0, User.Identity.GetUserName().IndexOf("@")) + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "nav-link" })
+        @Html.ActionLink("Welcome " + User.Identity.GetUserName().Substring(0, User.Identity.GetUserName().IndexOf("@")) + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "nav-link" })
     </li>
 
     <li class="nav-item">

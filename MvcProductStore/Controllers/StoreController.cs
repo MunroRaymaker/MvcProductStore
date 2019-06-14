@@ -32,7 +32,7 @@ namespace MvcProductStore.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public ActionResult Search(string q)
         {
             // This is vulnerable to sql injection             

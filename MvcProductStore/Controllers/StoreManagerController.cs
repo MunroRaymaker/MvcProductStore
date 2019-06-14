@@ -5,8 +5,6 @@ using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using System.Linq;
-using System.IO;
 
 namespace MvcProductStore.Controllers
 {
@@ -47,7 +45,7 @@ namespace MvcProductStore.Controllers
             StreamReader stmrdr = p.StandardOutput;
             string s = stmrdr.ReadToEnd();
             stmrdr.Close();
-            
+
             ViewBag.Message = s;
             return View();
         }
@@ -87,7 +85,7 @@ namespace MvcProductStore.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "ProductId,ItemNumber,CategoryId,BrandId,Name,Description,Price,Currency,ImageUrl")] Product product)
         {
             if (ModelState.IsValid)
@@ -123,13 +121,14 @@ namespace MvcProductStore.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([Bind(Include = "ProductId,ItemNumber,CategoryId,BrandId,Name,Description,Price,Currency,ImageUrl")] Product product)
         {
             if (ModelState.IsValid)
             {
                 this.db.Entry(product).State = EntityState.Modified;
                 await this.db.SaveChangesAsync();
+
                 return RedirectToAction("Index");
             }
             ViewBag.BrandId = new SelectList(this.db.Brand, "BrandId", "Name", product.BrandId);
@@ -154,7 +153,7 @@ namespace MvcProductStore.Controllers
 
         // POST: StoreManager/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
             Product product = await this.db.Products.FindAsync(id);

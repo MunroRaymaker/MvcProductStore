@@ -94,11 +94,15 @@ footer {
     border-bottom: 1px solid #dadada;
 }
 
+.strike-through{
+    color: red;
+    text-decoration: line-through;
+}
+
 @media (min-width: 1367px) {
     /*body {
         padding-top: 100px;
     }*/
-
     .search-input{
         width: 310px !important;
     }
