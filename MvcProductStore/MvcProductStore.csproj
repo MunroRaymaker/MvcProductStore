@@ -269,11 +269,14 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Images\1400x520_THE_SCENT_DK.jpg" />
+    <Content Include="Content\Images\3-tiles-small_Temposko_1_.jpg" />
+    <Content Include="Content\Images\5favorites.png" />
     <Content Include="Content\Images\apple-touch-icon-precomposed.png" />
     <Content Include="Content\Images\big-banner.png" />
     <Content Include="Content\Images\duty-free-512.png" />
     <Content Include="Content\Images\duty-free-blue.png" />
     <Content Include="Content\Images\favicon.ico" />
+    <Content Include="Content\Images\nb-1080v13-thumb.jpg" />
     <Content Include="Content\Images\sale-banner.jpg" />
     <Content Include="Content\Images\super_sale.jpg" />
     <Content Include="Content\reset.css" />

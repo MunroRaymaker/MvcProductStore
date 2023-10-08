@@ -62,8 +62,8 @@ namespace MvcProductStore
             //    ClientId = "",
             //    ClientSecret = ""
             //});
-                        
-            
+
+
             new IdentityManager().CreateSuperUsers();
         }
     }
