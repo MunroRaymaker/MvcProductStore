@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
+using MvcProductStore.Identity;
 using MvcProductStore.Models;
 using MvcProductStore.ViewModels;
 

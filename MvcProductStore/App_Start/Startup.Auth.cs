@@ -3,7 +3,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
-using MvcProductStore.Models;
+using MvcProductStore.Identity;
 using Owin;
 
 namespace MvcProductStore

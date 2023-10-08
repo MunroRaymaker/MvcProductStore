@@ -193,7 +193,10 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
-    <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="Identity\ApplicationSignInManager.cs" />
+    <Compile Include="Identity\ApplicationUser.cs" />
+    <Compile Include="Identity\EmailService.cs" />
+    <Compile Include="Identity\ApplicationUserManager.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -206,6 +209,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Identity\IdentityManager.cs" />
+    <Compile Include="Identity\SmsService.cs" />
     <Compile Include="Migrations\201808021240577_CreateIdentitySchema.cs" />
     <Compile Include="Migrations\201808021240577_CreateIdentitySchema.Designer.cs">
       <DependentUpon>201808021240577_CreateIdentitySchema.cs</DependentUpon>
@@ -243,7 +248,7 @@
     <Compile Include="Models\Brand.cs" />
     <Compile Include="Models\Cart.cs" />
     <Compile Include="Models\Category.cs" />
-    <Compile Include="Identity\IdentityModels.cs" />
+    <Compile Include="Identity\ApplicationDbContext.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\ProductStoreInitializer.cs" />

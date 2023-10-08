@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using MvcProductStore.Identity;
 
 namespace MvcProductStore.Models
 {

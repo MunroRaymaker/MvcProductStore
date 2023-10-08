@@ -1,27 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Security;
-using System.Security.Claims;
-using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace MvcProductStore.Models
+namespace MvcProductStore.Identity
 {
-    // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit https://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
-    public class ApplicationUser : IdentityUser
-    {
-        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
-        {
-            // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
-            var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
-            // Add custom user claims here
-            return userIdentity;
-        }
-    }
-
     public class IdentityManager
     {
         public bool RoleExists(string name)
@@ -78,45 +62,24 @@ namespace MvcProductStore.Models
             {
                 um.Create(new ApplicationUser
                 {
-                    Email = "admin" + "@runnershop.com",
-                    UserName = "admin",
+                    Email = "admin@runnershop.com",
+                    UserName = "admin@runnershop.com",
                     EmailConfirmed = true,
-                    LockoutEnabled = false                    
+                    LockoutEnabled = false
                 }, "123qwe");
-                var admin = um.FindByName("admin");
+                var admin = um.FindByName("admin@runnershop.com");
                 AddUserToRole(admin.Id, "Administrator");
 
                 um.Create(new ApplicationUser
                 {
-                    Email = "bob" + "@runnershop.com",
-                    UserName = "bob",
+                    Email = "bob@runnershop.com",
+                    UserName = "bob@runnershop.com",
                     EmailConfirmed = true,
                     LockoutEnabled = false,
                 }, "SecureP@ssword1234");
-                var su = um.FindByName("bob");
+                var su = um.FindByName("bob@runnershop.com");
                 AddUserToRole(su.Id, "SuperUser");
             }
-        }
-    }
-
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
-    {
-        public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
-        {
-            Database.SetInitializer<ApplicationDbContext>(new ProductStoreInitializer());
-        }
-
-        public DbSet<Product> Products { get; set; }
-        public DbSet<Category> Categories { get; set; }
-        public DbSet<Brand> Brand { get; set; }
-        public DbSet<Cart> Carts { get; set; }
-        public DbSet<Order> Orders { get; set; }
-        public DbSet<OrderDetail> OrderDetails { get; set; }
-
-        public static ApplicationDbContext Create()
-        {
-            return new ApplicationDbContext();
         }
     }
 }

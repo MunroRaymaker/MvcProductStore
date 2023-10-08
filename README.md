@@ -18,6 +18,13 @@ You then need to seed the database with some product data.
 The class ```ProductStoreInitializer``` should seed automatically, but it has been know to fail sometimes. 
 In that case there is a backup SQL script you can run against the database found in the folder Models.
 
+Two users will be created at startup, an Administrator and a SuperUser.
+_Administrator:_ ```admin@runnershop.com```
+_Password:_ ```123qwe```
+
+_SuperUser:_ ```bob@runnershop.com```
+_Password:_ ```SecureP@ssword1234```
+
 ### Recon
 Start by browsing the website.
 Check robots.txt.

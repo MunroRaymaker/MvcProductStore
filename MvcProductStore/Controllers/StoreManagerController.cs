@@ -4,6 +4,7 @@ using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using MvcProductStore.Identity;
 using MvcProductStore.Models;
 
 namespace MvcProductStore.Controllers
