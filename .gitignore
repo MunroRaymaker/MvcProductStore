@@ -320,3 +320,13 @@ ASALocalRun/
 
 # MSBuild Binary and Structured Log
 *.binlog
+/MvcProductStore/bin/MvcProductStore.dll
+/MvcProductStore/bin/MvcProductStore.pdb
+/MvcProductStore/obj/Debug/MvcProductStore.csproj.CoreCompileInputs.cache
+/MvcProductStore/obj/Debug/MvcProductStore.dll
+/MvcProductStore/obj/Debug/MvcProductStore.pdb
+/MvcProductStore/bin/MvcProductStore.dll
+/MvcProductStore/bin/MvcProductStore.pdb
+/MvcProductStore/obj/Debug/MvcProductStore.csproj.CoreCompileInputs.cache
+/MvcProductStore/obj/Debug/MvcProductStore.dll
+/MvcProductStore/obj/Debug/MvcProductStore.pdb
