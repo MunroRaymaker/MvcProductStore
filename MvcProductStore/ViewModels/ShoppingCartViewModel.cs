@@ -1,5 +1,5 @@
-﻿using MvcProductStore.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using MvcProductStore.Models;
 
 namespace MvcProductStore.ViewModels
 {

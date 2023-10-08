@@ -1,8 +1,8 @@
-﻿using MvcProductStore.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web.Mvc;
+using MvcProductStore.Models;
 
 namespace MvcProductStore.Controllers
 {
@@ -45,11 +45,11 @@ namespace MvcProductStore.Controllers
                 var cmd = new SqlCommand(sql, conn);
 
                 var reader = cmd.ExecuteReader();
-                while(reader.Read())
+                while (reader.Read())
                 {
                     var p = new Product
                     {
-                        ProductId = reader.GetInt32(reader.GetOrdinal("ProductId")),                        
+                        ProductId = reader.GetInt32(reader.GetOrdinal("ProductId")),
                         Name = reader.GetString(reader.GetOrdinal("Name")),
                         ImageUrl = reader.GetString(reader.GetOrdinal("ImageUrl"))
                     };

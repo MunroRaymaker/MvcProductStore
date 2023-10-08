@@ -1,14 +1,14 @@
-﻿using MvcProductStore.Models;
-using MvcProductStore.ViewModels;
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Mvc;
+using MvcProductStore.Models;
+using MvcProductStore.ViewModels;
 
 namespace MvcProductStore.Controllers
 {
     public class ShoppingCartController : Controller
     {
         ApplicationDbContext db = new ApplicationDbContext();
-        
+
         // GET: ShoppingCart
         public ActionResult Index()
         {

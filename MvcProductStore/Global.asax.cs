@@ -1,11 +1,7 @@
-﻿using MvcProductStore.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using MvcProductStore.Models;
 
 namespace MvcProductStore
 {
@@ -13,8 +9,9 @@ namespace MvcProductStore
     {
         protected void Application_Start()
         {
-            //System.Data.Entity.Database.SetInitializer(new ProductStoreInitializer());
-           
+            // This is necessary to seed the database with data
+            System.Data.Entity.Database.SetInitializer(new ProductStoreInitializer());
+
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

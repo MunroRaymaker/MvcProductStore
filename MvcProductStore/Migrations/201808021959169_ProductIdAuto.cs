@@ -1,8 +1,7 @@
 namespace MvcProductStore.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
-    
+
     public partial class ProductIdAuto : DbMigration
     {
         public override void Up()
@@ -11,7 +10,7 @@ namespace MvcProductStore.Migrations
             AlterColumn("dbo.Products", "ProductId", c => c.Int(nullable: false, identity: true));
             AddPrimaryKey("dbo.Products", "ProductId");
         }
-        
+
         public override void Down()
         {
             DropPrimaryKey("dbo.Products");

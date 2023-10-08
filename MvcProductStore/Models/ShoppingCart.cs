@@ -140,7 +140,7 @@ namespace MvcProductStore.Models
                     UnitPrice = item.Product.Price,
                     Quantity = item.Count
                 };
-            
+
                 // Set the order total of the shopping cart
                 orderTotal += (item.Count * item.Product.Price);
 

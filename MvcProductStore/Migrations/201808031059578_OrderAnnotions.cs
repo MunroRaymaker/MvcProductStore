@@ -1,8 +1,7 @@
 namespace MvcProductStore.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
-    
+
     public partial class OrderAnnotions : DbMigration
     {
         public override void Up()
@@ -17,7 +16,7 @@ namespace MvcProductStore.Migrations
             AlterColumn("dbo.Orders", "Phone", c => c.String(nullable: false, maxLength: 24));
             AlterColumn("dbo.Orders", "Email", c => c.String(nullable: false));
         }
-        
+
         public override void Down()
         {
             AlterColumn("dbo.Orders", "Email", c => c.String());

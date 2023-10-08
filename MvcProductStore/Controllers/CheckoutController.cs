@@ -1,8 +1,8 @@
-﻿using MvcProductStore.Models;
-using System;
+﻿using System;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web.Mvc;
+using MvcProductStore.Models;
 
 namespace MvcProductStore.Controllers
 {
@@ -27,10 +27,10 @@ namespace MvcProductStore.Controllers
 
             try
             {
-                if( string.IsNullOrEmpty(values["CardNumber"]) || 
-                    string.IsNullOrEmpty(values["CVC"]) || 
-                    string.IsNullOrEmpty(values["ExpDateMonth"]) || 
-                    string.IsNullOrEmpty(values["ExpDateYear"]) || 
+                if (string.IsNullOrEmpty(values["CardNumber"]) ||
+                    string.IsNullOrEmpty(values["CVC"]) ||
+                    string.IsNullOrEmpty(values["ExpDateMonth"]) ||
+                    string.IsNullOrEmpty(values["ExpDateYear"]) ||
                     string.IsNullOrEmpty(values["CardholderName"]))
                 {
                     return View(order);
@@ -82,7 +82,7 @@ namespace MvcProductStore.Controllers
 
                     decimal total = cart.GetTotal();
                     string expDate = $"{values["ExpDateMonth"]}{values["ExpDateYear"].ToString().Substring(2, 2)}";
-                    string cn = values["CardNumber"].ToString().Replace(" ","");
+                    string cn = values["CardNumber"].ToString().Replace(" ", "");
                     string cvc = values["CVC"];
                     string chn = values["CardholderName"];
 
@@ -91,7 +91,7 @@ namespace MvcProductStore.Controllers
                     cmd.Parameters.AddWithValue("ExpDate", expDate);
                     cmd.Parameters.AddWithValue("CVC", cvc);
                     cmd.Parameters.AddWithValue("CardholderName", chn);
-                    cmd.Parameters.AddWithValue("Amount", total);                    
+                    cmd.Parameters.AddWithValue("Amount", total);
                     cmd.Parameters.AddWithValue("TransactionId", transact);
                     cmd.Parameters.AddWithValue("OrderId", order.OrderId);
                     cmd.ExecuteNonQuery();
@@ -99,11 +99,11 @@ namespace MvcProductStore.Controllers
 
                 return RedirectToAction("Complete", new { id = order.OrderId });
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 // Invalid - redisplay order
                 return View(order);
-            }            
+            }
         }
 
         public ActionResult Complete(int id)

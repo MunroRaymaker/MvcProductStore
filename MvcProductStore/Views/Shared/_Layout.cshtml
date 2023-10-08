@@ -22,9 +22,20 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-secondary py-3">
             <div class="container">
 
-                <a class="navbar-brand" href="@Url.Action("Index", "Home")">
-                    @*<img src="https://getbootstrap.com/docs/4.1/assets/brand/bootstrap-solid.svg" width="30" height="30" alt="">*@
-                    <img src="~/Content/Images/duty-free-blue.png" alt="duty free" width="48" height="48" /> TAXFREE.COM
+                <a class="navbar-brand" href="@Url.Action("Index", "Home")">                    
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="45.401" height="38.065" viewBox="0 0 45.401 38.065">
+                        <defs>
+                            <linearGradient id="linear-gradient" x1="0.752" y1="0.341" x2="-0.185" y2="0.564" gradientUnits="objectBoundingBox">
+                                <stop offset="0.011" stop-color="#12e6ff"></stop>
+                                <stop offset="0.277" stop-color="#14bbff"></stop>
+                                <stop offset="0.603" stop-color="#178dff"></stop>
+                                <stop offset="0.855" stop-color="#1971ff"></stop>
+                                <stop offset="1" stop-color="#1a67ff"></stop>
+                            </linearGradient>
+                        </defs>
+                        <path id="Path_34" data-name="Path 34" d="M139.788,100.647c-2.439-1.506-8.058-4.887-15.754-9l-.022.028a.128.128,0,0,1,.02-.023A316.474,316.474,0,0,0,95.058,77.932s16.5,20.02,18.306,22.212l8.653-5.877-11.3,12.624h0L102.767,116c7.558-2.012,13.8-3.974,18.9-5.774v0c.048-.019.095-.034.141-.056,10.046-3.552,15.608-6.464,17.959-7.835C140.705,101.79,140.666,101.189,139.788,100.647Z" transform="translate(-95.058 -77.932)" fill="url(#linear-gradient)"></path>
+                    </svg>                    
+                    Runners Shop
                 </a>
 
                 @*Html.ActionLink("Product Store", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
@@ -67,7 +78,7 @@
         <div style="margin-left:15px; margin-right: 15px;">
             <div class="row" style="background: #000; color: yellow; margin-bottom: 15px;">
                 <div class="col-12">
-                    Best online taxfree shop.Save up to 70% on selected items in our store. Hurry up while the stock lasts. Buy before <span id="countdown"></span> and get free shipping!
+                    Best shop for runners. Save up to 70% on selected items in our store. Hurry up while the stock lasts. Buy before <span id="countdown">1d 23h</span> and get free shipping!
                 </div>
             </div>
 
@@ -82,7 +93,7 @@
             <div class="row">
 
                 <div class="col-lg-3">
-                    <h1 class="my-4"><a href="~/Store/Details/6" style="text-decoration: none">Tax Free Shopping made easy</a></h1>
+                    <h1 class="my-4"><a href="~/Store/Details/6" style="text-decoration: none">Mid season sale right now</a></h1>
                     <img src="~/Content/Images/sale-banner.jpg" width="250" />
                     @{ Html.RenderAction("CategoryMenu", "Store"); }
 

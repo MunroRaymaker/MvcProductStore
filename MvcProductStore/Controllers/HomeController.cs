@@ -1,11 +1,10 @@
-﻿using MvcProductStore.Models;
-using MvcProductStore.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using MvcProductStore.Models;
+using MvcProductStore.ViewModels;
 
 namespace MvcProductStore.Controllers
 {
@@ -22,7 +21,7 @@ namespace MvcProductStore.Controllers
 
         [HttpGet]
         public ActionResult Contact()
-        {            
+        {
             return View();
         }
 
@@ -33,7 +32,7 @@ namespace MvcProductStore.Controllers
         [HttpPost]
         public ActionResult Contact(ContactViewModel model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 if (model.File != null && model.File.ContentLength > 0)
                 {
@@ -53,7 +52,7 @@ namespace MvcProductStore.Controllers
                 // TODO Send email here                
 
                 return View("Confirmation");
-            }            
+            }
 
             return View();
         }
@@ -62,9 +61,9 @@ namespace MvcProductStore.Controllers
         public ActionResult Reviews()
         {
             var model = new List<ReviewViewModel>();
-            model.Add(new ReviewViewModel { Comment = "Great store!!!", Created = new DateTime(2018,6,5), UserName = "Bob Bobbins" });
-            model.Add(new ReviewViewModel { Comment = "I like this store", Created = new DateTime(2018,10,12), UserName = "Nabib Halal" });
-            model.Add(new ReviewViewModel { Comment = "How much money are your guys scamming of innocent people?", Created = new DateTime(2019,1,2), UserName = "Mr. Tidyman" });
+            model.Add(new ReviewViewModel { Comment = "Great store!!!", Created = new DateTime(2018, 6, 5), UserName = "Bob Bobbins" });
+            model.Add(new ReviewViewModel { Comment = "I like this store", Created = new DateTime(2018, 10, 12), UserName = "Nabib Halal" });
+            model.Add(new ReviewViewModel { Comment = "How much money are your guys scamming of innocent people?", Created = new DateTime(2019, 1, 2), UserName = "Mr. Tidyman" });
 
             Session["reviews"] = model;
 
@@ -95,11 +94,11 @@ namespace MvcProductStore.Controllers
         public ActionResult Reviews(FormCollection form)
         {
             var model = Session["reviews"] as List<ReviewViewModel>;
-            if(model == null)
+            if (model == null)
             {
                 model = new List<ReviewViewModel>();
             }
-            
+
             string user = form["userName"];
             string comment = form["comment"];
 
@@ -117,7 +116,7 @@ namespace MvcProductStore.Controllers
 
             foreach (var item in orders)
             {
-                if(dict.ContainsKey(item.ProductId))
+                if (dict.ContainsKey(item.ProductId))
                 {
                     dict[item.ProductId] = dict[item.ProductId] + item.Quantity;
                 }
@@ -131,6 +130,6 @@ namespace MvcProductStore.Controllers
             return db.Products.OrderByDescending(p => p.OrderDetails.Sum(o => o.Quantity))
                 .Take(count)
                 .ToList();
-        }        
+        }
     }
 }
