@@ -7,13 +7,16 @@
     <link rel="apple-touch-icon" href="~/Content/Images/apple-touch-icon-precomposed.png" />
 
     <title>@ViewBag.Title</title>
-    @Styles.Render("~/Content/css")
 
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link rel="stylesheet" href="~/Content/reset.css" />
+    <link rel="stylesheet" href="~/Content/bootstrap.css" />
+    <link rel="stylesheet" href="~/Content/Site.css" />
+
+    @*<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">*@
     <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
-    @Scripts.Render("~/bundles/modernizr")
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
 
 </head>
 <body>
@@ -22,7 +25,7 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-nav-grey py-3">
             <div class="container">
 
-                <a class="navbar-brand" href="@Url.Action("Index", "Home")">                    
+                <a class="navbar-brand" href="@Url.Action("Index", "Home")">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="45.401" height="38.065" viewBox="0 0 45.401 38.065">
                         <defs>
                             <linearGradient id="linear-gradient" x1="0.752" y1="0.341" x2="-0.185" y2="0.564" gradientUnits="objectBoundingBox">
@@ -34,7 +37,7 @@
                             </linearGradient>
                         </defs>
                         <path id="Path_34" data-name="Path 34" d="M139.788,100.647c-2.439-1.506-8.058-4.887-15.754-9l-.022.028a.128.128,0,0,1,.02-.023A316.474,316.474,0,0,0,95.058,77.932s16.5,20.02,18.306,22.212l8.653-5.877-11.3,12.624h0L102.767,116c7.558-2.012,13.8-3.974,18.9-5.774v0c.048-.019.095-.034.141-.056,10.046-3.552,15.608-6.464,17.959-7.835C140.705,101.79,140.666,101.189,139.788,100.647Z" transform="translate(-95.058 -77.932)" fill="url(#linear-gradient)"></path>
-                    </svg>                    
+                    </svg>
                     Runners Shop
                 </a>
 
@@ -47,7 +50,7 @@
 
                     @Html.Partial("_SearchPartial")
 
-                    <ul class="navbar-nav ml-auto">
+                    <ul class="navbar-nav ml-auto px-2">
                         <li class="nav-item active">
                             <a class="nav-link" href="/">
                                 Home
@@ -57,6 +60,7 @@
                         <li class="nav-item">
                             @Html.ActionLink("Store", "Index", "Store", new { area = "" }, new { @class = "nav-link" })
                         </li>
+                        <li><i class="fas fa-shopping-basket" style="vertical-align:bottom"></i></li>
                         <li class="nav-item">
                             @{ Html.RenderAction("CartSummary", "ShoppingCart"); }
                         </li>
@@ -114,14 +118,17 @@
         <!-- Footer -->
         <footer class="py-5 bg-dark">
             <div class="container">
-                <p class="m-0 text-center text-white">Copyright &copy; @DateTime.Now.Year | <a href="/Home/Contact">Contact us</a>  </p>
+                <p class="m-0 text-center text-white">All rights reserved Runnershop.com Copyright &copy; @DateTime.Now.Year | <a href="/Home/Contact">Contact us</a>  </p>
 
             </div>
 
             <div class="text-center center-block">
+                <img src="https://images.ctfassets.net/uxrhu22fwd1p/3dr6pnEzRwmeTnVnZDtthl/dff782ec795dcc885844985a43f13d9f/dk-logobar-web-dark-bkg.png"/>
+            </div>
+            
+            <div class="text-center center-block">
                 <a href="https://www.facebook.com/bootsnipp"><i class="fab fa-facebook fa-3x social"></i></a>
                 <a href="https://twitter.com/bootsnipp"><i class="fab fa-twitter fa-3x social"></i></a>
-                <a href="https://plus.google.com/+Bootsnipp-page"><i class="fab fa-google-plus fa-3x social"></i></a>
                 <a href="mailto:bootsnipp@gmail.com"><i class="fab fa-instagram fa-3x social"></i></a>
             </div>
 
@@ -130,39 +137,10 @@
     </div>
 
     <!-- Bootstrap core JavaScript -->
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+
     @RenderSection("scripts", required: false)
 
-    <script>
-        // Set the date we're counting down to
-        var countDownDate = new Date("Mar 5, 2021 15:37:25").getTime();
-
-        // Update the count down every 1 second
-        //var x = setInterval(function () {
-
-        //    // Get todays date and time
-        //    var now = new Date().getTime();
-
-        //    // Find the distance between now and the count down date
-        //    var distance = countDownDate - now;
-
-        //    // Time calculations for days, hours, minutes and seconds
-        //    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        //    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        //    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        //    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        //    // Display the result in the element with id="demo"
-        //    document.getElementById("countdown").innerHTML = days + "d " + hours + "h "
-        //        + minutes + "m " + seconds + "s ";
-
-        //    // If the count down is finished, write some text
-        //    if (distance < 0) {
-        //        clearInterval(x);
-        //        document.getElementById("demo").innerHTML = "EXPIRED";
-        //    }
-        //}, 1000);
-    </script>
 </body>
 </html>

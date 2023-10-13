@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNet.Identity
 @if (Request.IsAuthenticated)
 {
+    <li><i class="fas fa-user" style="vertical-align:bottom"></i></li>
     <li class="nav-item">
         @Html.ActionLink("Welcome " + User.Identity.GetUserName().Substring(0, User.Identity.GetUserName().IndexOf("@")) + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "nav-link" })
     </li>
@@ -11,14 +12,14 @@
             @Html.AntiForgeryToken()
             <a href="javascript:document.getElementById('logoutForm').submit()" class="nav-link">Log off</a>
         }
-    </li>    
+    </li>
 }
 else
 {
-
-    <li class="nav-item">
+    <li><i class="far fa-user" style="vertical-align:bottom"></i></li>
+    @*<li class="nav-item">
         @Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "nav-link" })
-    </li>
+    </li>*@
     <li class="nav-item">
         @Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "nav-link" })
     </li>

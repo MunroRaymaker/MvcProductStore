@@ -179,7 +179,7 @@ Try different logins to try and brute force. This is a slow process even using a
 ## Cheat sheet
 
 ### Authorisation
-An admin has left a hint on the login page. See if you can find it in the source code for the page. Can you figure out the email address? Probably the domain has something to do with the site.
+An admin has left a hint on the login page. See if you can find it in the source code for the page. It's probably encoded using a top secret encoding algorithm :-) Can you figure out the email address? Probably the domain has something to do with the site.
 Password hint: password
 Another way to get in as admin is to create a regular user. Check the Register page source code for hints, and examine what is being posted back to the server. Maybe you can escalate yourself as admin by fiddling with the POST values?
 

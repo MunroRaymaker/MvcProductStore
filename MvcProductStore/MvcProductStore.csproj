@@ -243,6 +243,10 @@
     <Compile Include="Migrations\201808031059578_OrderAnnotions.Designer.cs">
       <DependentUpon>201808031059578_OrderAnnotions.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202310131102397_AddCreditcard.cs" />
+    <Compile Include="Migrations\202310131102397_AddCreditcard.designer.cs">
+      <DependentUpon>202310131102397_AddCreditcard.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Brand.cs" />
@@ -286,6 +290,12 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\categories\10.jpg" />
+    <Content Include="Images\categories\20.jpg" />
+    <Content Include="Images\categories\30.jpg" />
+    <Content Include="Images\categories\40.jpg" />
+    <Content Include="Images\categories\50.jpg" />
+    <Content Include="Images\categories\60.jpg" />
     <Content Include="Images\products\1011b691_400_sr_rt_glb_png_1500x1500-jpg.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -455,6 +465,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808031059578_OrderAnnotions.resx">
       <DependentUpon>201808031059578_OrderAnnotions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310131102397_AddCreditcard.resx">
+      <DependentUpon>202310131102397_AddCreditcard.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

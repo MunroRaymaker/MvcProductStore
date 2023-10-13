@@ -531,3 +531,4 @@ C:\src\github\MvcProductStore\MvcProductStore\bin\Images\products\nb_1080_12_ora
 C:\src\github\MvcProductStore\MvcProductStore\bin\Images\products\new_balance_1080_v_12_white_green_5_.jpg
 C:\src\github\MvcProductStore\MvcProductStore\bin\Images\products\new_balance_evoz_v3_white_womens.jpg
 C:\src\github\MvcProductStore\MvcProductStore\bin\Images\products\trail-3-4.jpg
+C:\src\github\MvcProductStore\MvcProductStore\obj\Debug\MvcProductStore.Migrations.AddCreditcard.resources
