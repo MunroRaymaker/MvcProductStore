@@ -296,30 +296,66 @@
     <Content Include="Images\categories\40.jpg" />
     <Content Include="Images\categories\50.jpg" />
     <Content Include="Images\categories\60.jpg" />
+    <Content Include="Images\products\1011b548_800_sr_rt_glb_png_1500x1500-jpg.jpg" />
     <Content Include="Images\products\1011b691_400_sr_rt_glb_png_1500x1500-jpg.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\products\1011b703_100_sr_rt_glb_png_1500x1500-jpg.jpg" />
     <Content Include="Images\products\1012b429_400_sr_rt_glb_png_1500x1500-jpg.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\products\1012b612_400_sr_rt_glb_png_1500x1500-jpg.jpg" />
+    <Content Include="Images\products\1500x1500_-_2022-05-11t141451.jpg" />
+    <Content Include="Images\products\1500x1500_hokabm1.jpg" />
+    <Content Include="Images\products\adidas_adizero_prime_x_2_strung.jpg" />
     <Content Include="Images\products\boston_10_8_.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\products\dj5404-100-phsrh000.jpg" />
+    <Content Include="Images\products\hoka_clifton_9_gtx_dbes.jpg" />
+    <Content Include="Images\products\hoka_kawana_ncif.jpg" />
+    <Content Include="Images\products\hoka_mach_x_mens_green_6_.jpg" />
+    <Content Include="Images\products\hoka_rocket_x2_bkml.jpg" />
+    <Content Include="Images\products\hp5565_1_footwear_photography_side_lateral_center_view_white.jpg" />
+    <Content Include="Images\products\id6939_1_footwear_photography_side_lateral_center_view_white.jpg" />
     <Content Include="Images\products\id8473_1_footwear_photography_side_lateral_center_view_white.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\products\ie6787_1_footwear_photography_side_lateral_center_view_white.jpg" />
+    <Content Include="Images\products\l47291700_0_gho_drx_blissdesert_sage_zinna_white1.jpg" />
+    <Content Include="Images\products\mizuno_wave_duel_pro_unisex_red_blue.jpg" />
+    <Content Include="Images\products\mizuno_wave_neo_ultra_womens_4_.jpg" />
+    <Content Include="Images\products\mizuno_wave_rider_27_orangewhite.jpg" />
+    <Content Include="Images\products\nb-fuelcell-rebel-v3.jpg" />
     <Content Include="Images\products\nb_1080_12_orange.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\products\nb_fresh_foam_more_v3_white_green_mens.jpg" />
+    <Content Include="Images\products\nb_fresh_foam_more_v3_white_grey.jpg" />
+    <Content Include="Images\products\nb_mvngolg6_1_.jpg" />
+    <Content Include="Images\products\new_balance_1080_12_light_blue_womens_4_.jpg" />
     <Content Include="Images\products\new_balance_1080_v_12_white_green_5_.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\products\new_balance_evoz_v3_white_womens.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\products\new_balance_fresh_foam_more_v4_blue_purple.jpg" />
+    <Content Include="Images\products\new_balance_fuelcell_supercomp_racer_v3_womens_green_white_5_.jpg" />
+    <Content Include="Images\products\new_balance_fuelcell_supercomp_trainer_v2_orange_5_.jpg" />
+    <Content Include="Images\products\new_balance_hierro_7_orange_womens_4_.jpg" />
+    <Content Include="Images\products\new_balance_summit_unknown_4_yellow_4_.jpg" />
+    <Content Include="Images\products\novablast-2-asics-herre-1.jpg" />
+    <Content Include="Images\products\puma_deviate_nitro_2_wtrepel_black_purple_5_.jpg" />
+    <Content Include="Images\products\puma_magnify_nitro_2_fire_orchid_blue.jpg" />
+    <Content Include="Images\products\puma_magnify_nitro_2_icy_blue_wmn.jpg" />
+    <Content Include="Images\products\puma_voyage_nitro_3_gtx_wmns_black_neon_sun.jpg" />
+    <Content Include="Images\products\salomon_aero_glide_womens_safari_5_.jpg" />
     <Content Include="Images\products\salomon_pulsar_trail_pro_wine_4_.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\products\salomon_thundercross_gtx_flintstone.jpg" />
+    <Content Include="Images\products\supercomp_elite_v3_purple_1.jpg" />
     <Content Include="Images\products\trail-3-4.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
