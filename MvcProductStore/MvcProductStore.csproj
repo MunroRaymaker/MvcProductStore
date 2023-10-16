@@ -273,6 +273,8 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Images\1400x520_THE_SCENT_DK.jpg" />
+    <Content Include="Content\Images\2002_RDO_RDQ_RDN_Comp_A_Desktop.jpg" />
+    <Content Include="Content\Images\2002_RDO_RDQ_RDN_Comp_A_Mobile.jpg" />
     <Content Include="Content\Images\3-tiles-small_Temposko_1_.jpg" />
     <Content Include="Content\Images\5favorites.png" />
     <Content Include="Content\Images\apple-touch-icon-precomposed.png" />
@@ -281,6 +283,7 @@
     <Content Include="Content\Images\duty-free-blue.png" />
     <Content Include="Content\Images\favicon.ico" />
     <Content Include="Content\Images\nb-1080v13-thumb.jpg" />
+    <Content Include="Content\Images\RYW_Phase2_Wesley_Comp_S_Desktop_Single.jpg" />
     <Content Include="Content\Images\sale-banner.jpg" />
     <Content Include="Content\Images\super_sale.jpg" />
     <Content Include="Content\reset.css" />
@@ -301,6 +304,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\products\1011b703_100_sr_rt_glb_png_1500x1500-jpg.jpg" />
+    <Content Include="Images\products\1011b751_200_sr_rt_glb_png_1500x1500-jpg.jpg" />
     <Content Include="Images\products\1012b429_400_sr_rt_glb_png_1500x1500-jpg.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
