@@ -11,6 +11,22 @@
 </p>
 <div id="album-details">
     <p>
+        <select class="form-control custom-select custom-select-lg mb-3 w-25" id="Size" name="Size">
+            <option>Select Size</option>
+            <option>37</option>
+            <option>38</option>
+            <option>39</option>
+            <option>40</option>
+            <option>41</option>
+            <option>42</option>
+            <option>43</option>
+            <option>44</option>
+            <option>45</option>
+            <option>46</option>
+            <option>47</option>
+        </select>
+    </p>
+    <p>
         <strong>Category:</strong>
         @Model.Category.Name
     </p>
@@ -28,7 +44,7 @@
         <span class="strike-through">@String.Format("{0:F} {1}", Model.Price * 1.25m, Model.Currency)</span>
     </p>
     <p>
-        @Html.ActionLink("+ Add to cart", "AddToCart", "ShoppingCart", new { id = Model.ProductId }, new { @class = "btn btn-success" })        
+        @Html.ActionLink("+ Add to cart", "AddToCart", "ShoppingCart", new { id = Model.ProductId }, new { @class = "btn btn-success" })
     </p>
 </div>
 
