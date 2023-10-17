@@ -277,7 +277,6 @@
     <Content Include="Content\Images\2002_RDO_RDQ_RDN_Comp_A_Mobile.jpg" />
     <Content Include="Content\Images\3-tiles-small_Temposko_1_.jpg" />
     <Content Include="Content\Images\5favorites.png" />
-    <Content Include="Content\Images\apple-touch-icon-precomposed.png" />
     <Content Include="Content\Images\big-banner.png" />
     <Content Include="Content\Images\duty-free-512.png" />
     <Content Include="Content\Images\duty-free-blue.png" />
@@ -287,7 +286,7 @@
     <Content Include="Content\Images\sale-banner.jpg" />
     <Content Include="Content\Images\super_sale.jpg" />
     <Content Include="Content\reset.css" />
-    <Content Include="favicon.ico" />
+    <Content Include="favicon_1.png" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="ApplicationInsights.config">
