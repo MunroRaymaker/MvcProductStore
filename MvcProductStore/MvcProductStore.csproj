@@ -473,6 +473,7 @@
     <Content Include="SKU\1001.pdf" />
     <Content Include="SKU\1002.pdf" />
     <Content Include="SKU\1003.pdf" />
+    <Content Include="SKU\1000.pdf" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

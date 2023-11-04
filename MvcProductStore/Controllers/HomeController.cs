@@ -61,10 +61,13 @@ namespace MvcProductStore.Controllers
         [HttpGet]
         public ActionResult Reviews()
         {
-            var model = new List<ReviewViewModel>();
-            model.Add(new ReviewViewModel { Comment = "Great store!!!", Created = new DateTime(2018, 6, 5), UserName = "Bob Bobbins" });
-            model.Add(new ReviewViewModel { Comment = "I like this store", Created = new DateTime(2018, 10, 12), UserName = "Nabib Halal" });
-            model.Add(new ReviewViewModel { Comment = "How much money are your guys scamming of innocent people?", Created = new DateTime(2019, 1, 2), UserName = "Mr. Tidyman" });
+            var model = new List<ReviewViewModel>
+            {
+                new ReviewViewModel { Comment = "Great store!!!", Created = new DateTime(2018, 6, 5), UserName = "Bob Bobbins" },
+                new ReviewViewModel { Comment = "I like this store", Created = new DateTime(2018, 10, 12), UserName = "Nabib Halal" },
+                new ReviewViewModel { Comment = "How much money are your guys scamming of innocent people?", Created = new DateTime(2019, 1, 2), UserName = "Mr. Tidyman" },
+                new ReviewViewModel { Comment = "<img src=x onerror=alert(String.fromCharCode(88,83,83))>", Created = DateTime.Now.AddDays(-14), UserName = "Muhaddi" }
+            };
 
             Session["reviews"] = model;
 
