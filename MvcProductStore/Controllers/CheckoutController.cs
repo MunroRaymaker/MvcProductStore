@@ -12,7 +12,7 @@ namespace MvcProductStore.Controllers
     public class CheckoutController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-        //const string PromoCode = "FREE";
+        const string PromoCode = "FREE";
 
         // GET: Checkout
         public ActionResult AddressAndPayment()
@@ -29,6 +29,12 @@ namespace MvcProductStore.Controllers
 
             try
             {
+                if (string.Equals(values["PromoCode"], PromoCode,
+                        StringComparison.OrdinalIgnoreCase) == false)
+                {
+                    return View(order);
+                }
+
                 if (string.IsNullOrEmpty(values["CardNumber"]) ||
                     string.IsNullOrEmpty(values["CVC"]) ||
                     string.IsNullOrEmpty(values["ExpDateMonth"]) ||
