@@ -66,7 +66,7 @@ namespace MvcProductStore.Controllers
                 new ReviewViewModel { Comment = "Great store!!!", Created = new DateTime(2018, 6, 5), UserName = "Bob Bobbins" },
                 new ReviewViewModel { Comment = "I like this store", Created = new DateTime(2018, 10, 12), UserName = "Nabib Halal" },
                 new ReviewViewModel { Comment = "How much money are your guys scamming of innocent people?", Created = new DateTime(2019, 1, 2), UserName = "Mr. Tidyman" },
-                new ReviewViewModel { Comment = "<img src=x onerror=alert(String.fromCharCode(88,83,83))>", Created = DateTime.Now.AddDays(-14), UserName = "Muhaddi" }
+                //new ReviewViewModel { Comment = "<img src=x onerror=alert(String.fromCharCode(88,83,83))>", Created = DateTime.Now.AddDays(-14), UserName = "Muhaddi" }
             };
 
             Session["reviews"] = model;

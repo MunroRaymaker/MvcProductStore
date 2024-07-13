@@ -521,7 +521,6 @@ C:\src\github\MvcProductStore\MvcProductStore\bin\Microsoft.AI.DependencyCollect
 C:\src\github\MvcProductStore\MvcProductStore\bin\Microsoft.AI.WindowsServer.xml
 C:\src\github\MvcProductStore\MvcProductStore\bin\Microsoft.AI.Web.xml
 C:\src\github\MvcProductStore\MvcProductStore\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\src\github\MvcProductStore\MvcProductStore\obj\Debug\MvcProductStore.csproj.CopyComplete
 C:\src\github\MvcProductStore\MvcProductStore\bin\Images\products\salomon_pulsar_trail_pro_wine_4_.jpg
 C:\src\github\MvcProductStore\MvcProductStore\bin\Images\products\1011b691_400_sr_rt_glb_png_1500x1500-jpg.jpg
 C:\src\github\MvcProductStore\MvcProductStore\bin\Images\products\1012b429_400_sr_rt_glb_png_1500x1500-jpg.jpg
@@ -532,3 +531,4 @@ C:\src\github\MvcProductStore\MvcProductStore\bin\Images\products\new_balance_10
 C:\src\github\MvcProductStore\MvcProductStore\bin\Images\products\new_balance_evoz_v3_white_womens.jpg
 C:\src\github\MvcProductStore\MvcProductStore\bin\Images\products\trail-3-4.jpg
 C:\src\github\MvcProductStore\MvcProductStore\obj\Debug\MvcProductStore.Migrations.AddCreditcard.resources
+C:\src\github\MvcProductStore\MvcProductStore\obj\Debug\MvcProdu.01F7FDFD.Up2Date

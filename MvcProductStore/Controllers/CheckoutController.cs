@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web.Mvc;
@@ -39,21 +40,23 @@ namespace MvcProductStore.Controllers
 
                 order.Username = User.Identity.Name;
                 order.OrderDate = DateTime.Now;
-
-                // Save order
-                db.Orders.Add(order);
-                db.SaveChanges();
-
+                
                 // Process order
                 var cart = ShoppingCart.GetCart(this.HttpContext);
                 cart.CreateOrder(order);
 
+                order.Total = cart.GetTotal();
+
+                // Save order
+                db.Orders.Add(order);
+                db.SaveChanges();
+                
                 // Fake Payment Generator
                 Random rnd = new Random();
                 var transact = rnd.Next(1000000000, 1200000000);
 
                 // Payment
-                using (var conn = new SqlConnection(db.Database.Connection.ConnectionString))
+                using (var conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
                 {
                     conn.Open();
                     var sql = @"
