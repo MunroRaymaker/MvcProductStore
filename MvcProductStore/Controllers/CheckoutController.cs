@@ -3,6 +3,7 @@ using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web.Mvc;
+using Bogus;
 using MvcProductStore.Identity;
 using MvcProductStore.Models;
 
@@ -17,7 +18,25 @@ namespace MvcProductStore.Controllers
         // GET: Checkout
         public ActionResult AddressAndPayment()
         {
-            return View();
+            var summary = ShoppingCart.GetCart(this.HttpContext).GetOrderSummary();
+            
+            ViewBag.Total = summary.Total;
+            ViewBag.SubTotal = summary.SubTotal;
+            ViewBag.Shipping = summary.ShippingCost;
+
+            Order fakeData = new Faker<Order>("es")
+                .RuleFor(o => o.FirstName, f => f.Person.FirstName)
+                .RuleFor(o => o.LastName, f => f.Person.LastName)
+                .RuleFor(o => o.Address, f => f.Address.StreetAddress())
+                .RuleFor(o => o.City, f => f.Address.City())
+                .RuleFor(o => o.Country, f => f.Address.Country())
+                .RuleFor(o => o.State, f => f.Address.State())
+                .RuleFor(o => o.PostalCode, f => f.Address.ZipCode())
+                .RuleFor(o => o.Phone, f => f.Phone.PhoneNumber())
+                .RuleFor(o => o.Email, f => f.Person.Email)
+                .Generate();
+
+            return View(fakeData);
         }
 
         // POST
@@ -30,7 +49,7 @@ namespace MvcProductStore.Controllers
             try
             {
                 if (string.Equals(values["PromoCode"], PromoCode,
-                        StringComparison.OrdinalIgnoreCase) == false)
+                        StringComparison.OrdinalIgnoreCase) == true)
                 {
                     return View(order);
                 }
@@ -47,16 +66,17 @@ namespace MvcProductStore.Controllers
                 order.Username = User.Identity.Name;
                 order.OrderDate = DateTime.Now;
                 
-                // Process order
-                var cart = ShoppingCart.GetCart(this.HttpContext);
-                cart.CreateOrder(order);
-
-                order.Total = cart.GetTotal();
-
                 // Save order
                 db.Orders.Add(order);
                 db.SaveChanges();
-                
+
+                // Process order - needs to be in this order, or else the statement will fail because the order does not exist and no foreign key can be found.
+                var cart = ShoppingCart.GetCart(this.HttpContext);
+                cart.CreateOrder(order);
+
+                // Update order with totals
+                db.SaveChanges();
+
                 // Fake Payment Generator
                 Random rnd = new Random();
                 var transact = rnd.Next(1000000000, 1200000000);

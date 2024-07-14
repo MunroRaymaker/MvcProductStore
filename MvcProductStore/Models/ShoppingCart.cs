@@ -10,10 +10,11 @@ namespace MvcProductStore.Models
     public partial class ShoppingCart
     {
         ApplicationDbContext db = new ApplicationDbContext();
+        private string ShoppingCartId { get; set; }
+        private const decimal ShippingCost = 50.00m;
 
-        string ShoppingCartId { get; set; }
         public const string CartSessionKey = "CartId";
-
+        
         public static ShoppingCart GetCart(HttpContextBase context)
         {
             var cart = new ShoppingCart();
@@ -148,12 +149,20 @@ namespace MvcProductStore.Models
                 db.OrderDetails.Add(orderDetail);
 
             }
+
+            // Include shipping cost
+            orderTotal += ShippingCost;
+
             // Set the order's total to the orderTotal count
+            order.Shipping = ShippingCost;
             order.Total = orderTotal;
+
             // Save the order
             db.SaveChanges();
+            
             // Empty the shopping cart
             EmptyCart();
+            
             // Return the OrderId as the confirmation number
             return order.OrderId;
         }
@@ -191,6 +200,17 @@ namespace MvcProductStore.Models
                 item.CartId = userName;
             }
             db.SaveChanges();
+        }
+
+        public OrderSummaryModel GetOrderSummary()
+        {
+            var summary = new OrderSummaryModel
+            {
+                ShippingCost = ShippingCost,
+                SubTotal = GetTotal()
+            };
+
+            return summary;
         }
     }
 }

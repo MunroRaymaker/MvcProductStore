@@ -532,3 +532,6 @@ C:\src\github\MvcProductStore\MvcProductStore\bin\Images\products\new_balance_ev
 C:\src\github\MvcProductStore\MvcProductStore\bin\Images\products\trail-3-4.jpg
 C:\src\github\MvcProductStore\MvcProductStore\obj\Debug\MvcProductStore.Migrations.AddCreditcard.resources
 C:\src\github\MvcProductStore\MvcProductStore\obj\Debug\MvcProdu.01F7FDFD.Up2Date
+C:\src\github\MvcProductStore\MvcProductStore\obj\Debug\MvcProductStore.Migrations.AddShippingToOrder.resources
+C:\src\github\MvcProductStore\MvcProductStore\bin\Bogus.dll
+C:\src\github\MvcProductStore\MvcProductStore\bin\Bogus.xml
